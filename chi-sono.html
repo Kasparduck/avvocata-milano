@@ -176,6 +176,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
 .percorso-lista li.attiva p { filter: none; opacity: 1; }
 .percorso-lista li.attiva .segno { background: var(--bronzo-linea); transform: scaleY(3); }
 .percorso-lista li.attiva .anno { color: var(--inchiostro); }
+/* 9/11, Franco: «è tagliato il testo sotto 2008»: sei colonne da 250px non entravano e l'ultima restava tagliata sul bordo. Sul computer stanno tutte nello schermo */
+@media (min-width: 1200px) { .percorso-lista { grid-auto-columns: minmax(0, 1fr); overflow: visible; } .percorso-lista p { padding-right: 24px; font-size: .96rem; } }
 
 /* ---------- 6. come lavoro: quattro principi ---------- */
 .come-griglia { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 64px); margin-top: 30px; }
