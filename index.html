@@ -9,10 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<style>/* le sole regole di MapLibre che servono, dentro la pagina */
-.maplibregl-map{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}.maplibregl-canvas{position:absolute;left:0;top:0}.maplibregl-canvas-container{position:absolute;inset:0}
-.maplibregl-marker{position:absolute;top:0;left:0;will-change:transform}.maplibregl-ctrl-top-left,.maplibregl-ctrl-top-right,.maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{position:absolute;pointer-events:none;z-index:2}
-.maplibregl-ctrl-top-left{top:0;left:0}.maplibregl-ctrl{clear:both;pointer-events:auto}.maplibregl-ctrl-attrib{padding:1px 6px}.maplibregl-ctrl-attrib-button{display:none}</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.css">
 <style>
 /* Studio legale, VERSIONE 3 (9/11/2026). Franco: «organizziamo qualcosa di analogo [a TRINITI] ma per una singola avvocatessa penalista e civilista…
    introduciamo un po' di personalizzazione per non ricalcare esattamente il sito, ma personalizzazioni di valore prese da siti premium».
@@ -389,21 +386,89 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .prossimo b { font: 500 1.25rem var(--serif); }
 .prossimo p { color: var(--tenue); font-size: .9rem; }
 
-/* ---------- 11. dove ---------- */
-.dove-griglia { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 20px clamp(24px, 3vw, 44px); margin-top: 30px; align-items: stretch; }
-.mappa { position: relative; overflow: hidden; min-height: 460px; background: #eee6da; border: 1px solid var(--linea); }
+/* ---------- 11. dove: la mappa vera di Milano (8/11), comandi sopra la mappa nei colori del sito ---------- */
+.mappa-quadro { position: relative; overflow: hidden; background: #eee6da; border: 1px solid var(--linea); min-height: 460px; isolation: isolate; }
+.mappa { position: absolute; inset: 0; }
 .mappa .riserva { position: absolute; inset: 0; display: grid; place-items: center; color: var(--tenue); font-size: .9rem; }
-.mappa.mappa-vera .riserva { display: none; }
-.nome-mappa { display: inline-block; font: 600 .62rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--inchiostro); background: rgb(251 248 243 / .92); border: 1px solid var(--linea-forte); padding: 5px 8px; white-space: nowrap; transform: translateY(-38px); }
-.nome-mappa.qui { color: var(--gesso); background: var(--inchiostro); border-color: transparent; transform: translateY(-52px); }
-.segno-sede { width: 26px; height: 40px; position: relative; pointer-events: none; }
+.mappa-pronta .riserva { display: none; }
+.mappa-quadro button { cursor: pointer; border: 0; }
+.mappa-dove { position: absolute; z-index: 3; top: 18px; left: 18px; display: inline-flex; align-items: center; gap: 10px; background: rgb(251 248 243 / .94); padding: 10px 14px; font: 600 .62rem var(--sans); letter-spacing: .2em; text-transform: uppercase; box-shadow: 0 6px 22px -10px rgb(60 40 20 / .35); pointer-events: none; }
+.mappa-dove i { width: 6px; height: 6px; border-radius: 50%; background: var(--bronzo); }
+.mappa-tasti { position: absolute; z-index: 3; top: 18px; right: 18px; display: grid; box-shadow: 0 6px 22px -10px rgb(60 40 20 / .35); }
+.mappa-tasti button { width: 42px; height: 40px; background: rgb(251 248 243 / .96); color: var(--inchiostro); font: 400 1.25rem/1 var(--sans); border-bottom: 1px solid var(--linea); }
+.mappa-tasti button[data-piatta] { font: 600 .72rem var(--sans); letter-spacing: .08em; border-bottom: 0; }
+.mappa-tasti button:hover { background: var(--gesso); color: var(--bronzo); }
+.mappa-piede { position: absolute; z-index: 3; left: 50%; bottom: 34px; transform: translateX(-50%); display: grid; justify-items: center; gap: 9px; width: max-content; max-width: calc(100% - 24px); }
+.mappa-viste { display: flex; background: rgb(251 248 243 / .96); padding: 4px; box-shadow: 0 10px 30px -14px rgb(60 40 20 / .45); }
+.mappa-viste button { background: none; padding: 10px 16px; font: 500 .82rem var(--sans); color: var(--tenue); white-space: nowrap; transition: background .25s, color .25s; }
+.mappa-viste button[aria-pressed="true"] { background: var(--noce); color: var(--su-noce); }
+.mappa-viste button:not([aria-pressed="true"]):hover { color: var(--bronzo); }
+.mappa-linee { display: flex; align-items: center; gap: 5px; background: rgb(251 248 243 / .92); padding: 6px 10px; }
+.mappa-linee span { font: 600 .56rem var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); margin-right: 5px; }
+.mappa-linee button { width: 30px; height: 22px; font: 700 .62rem var(--sans); color: #fff; border-radius: 2px; opacity: .28; transition: opacity .2s; }
+.mappa-linee button[aria-pressed="true"] { opacity: 1; }
+.l1 { background: #c34840; } .l2 { background: #418269; } .l3 { background: #d9a93a; color: #3a2f12 !important; } .l4 { background: #4b79ad; } .l5 { background: #977ea9; }
+.mappa-scheda[hidden] { display: none; }
+.mappa-scheda { position: absolute; z-index: 4; left: 18px; top: 66px; width: min(300px, calc(100% - 36px)); background: var(--gesso); border-left: 2px solid var(--bronzo); padding: 16px 18px; box-shadow: 0 18px 40px -18px rgb(60 40 20 / .5); display: grid; gap: 6px; }
+.mappa-scheda small { font: 600 .58rem var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); }
+.mappa-scheda h4 { font: 400 1.45rem/1.1 var(--serif); }
+.mappa-scheda p { font-size: .86rem; color: var(--tenue); line-height: 1.55; }
+.mappa-scheda a { color: var(--bronzo); font-weight: 600; font-size: .86rem; }
+.mappa-chiudi { position: absolute; top: 6px; right: 8px; background: none; font-size: 1.3rem; color: var(--tenue); width: 30px; height: 30px; }
+.bollino { display: inline-grid; place-items: center; min-width: 26px; height: 18px; padding: 0 4px; margin-right: 3px; font: 700 .6rem var(--sans); color: #fff; border-radius: 2px; vertical-align: 1px; }
+.bollino.l1 { background: #c34840; } .bollino.l2 { background: #418269; } .bollino.l3 { background: #d9a93a; color: #3a2f12; } .bollino.l4 { background: #4b79ad; } .bollino.l5 { background: #977ea9; }
+.segno-nome { cursor: pointer; } .segno-nome .nome-mappa { transition: opacity .35s; } /* MapLibre scrive opacity sul segnaposto: si spegne la scritta dentro */
+.mappa-lontana .segno-nome { pointer-events: none; } .mappa-lontana .segno-nome .nome-mappa { opacity: 0; }
+.nome-mappa { display: inline-block; font: 600 .62rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--inchiostro); background: rgb(251 248 243 / .94); border: 1px solid var(--linea-forte); padding: 5px 8px; white-space: nowrap; transform: translateY(-14px); }
+.nome-mappa.qui { color: var(--gesso); background: var(--noce); border-color: transparent; border-top: 2px solid var(--bronzo-chiaro); padding: 8px 13px; text-align: center; transform: translateY(-40px); }
+.nome-mappa.qui small { display: block; font: 500 .6rem var(--sans); letter-spacing: .08em; text-transform: none; color: var(--su-noce-tenue); margin-top: 3px; }
+.segno-sede { width: 26px; height: 26px; }
 .mappa-goccia { position: absolute; left: 3px; top: 0; width: 20px; height: 20px; background: var(--bronzo); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 6px 16px rgb(80 55 30 / .35); }
 .mappa-goccia::after { content: ''; position: absolute; inset: 6px; border-radius: 50%; background: var(--gesso); }
 .mappa-anello { position: absolute; left: 50%; bottom: 0; width: 40px; height: 14px; margin-left: -20px; border: 1.5px solid rgb(143 107 71 / .7); border-radius: 50%; }
 @media (prefers-reduced-motion: no-preference) { .mappa-anello { animation: battito 2.4s ease-out infinite; } @keyframes battito { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.6); opacity: 0; } } }
-.mappa .maplibregl-ctrl-attrib { background: rgb(251 248 243 / .8); color: #6b6157; font-size: 10px; } .mappa .maplibregl-ctrl-attrib a { color: #6b6157; }
-.dove-destra { display: grid; gap: 20px; align-content: start; }
+.mappa-quadro .maplibregl-ctrl-attrib { background: rgb(251 248 243 / .85); color: #6b6157; font-size: 10px; }
+.mappa-quadro .maplibregl-ctrl-attrib a { color: #6b6157; }
+.mappa-quadro .maplibregl-cooperative-gesture-screen { background: rgb(42 36 32 / .55); color: var(--su-noce); font: 500 1rem var(--sans); }
+/* «come arrivare»: elenco di voci che fanno volare la mappa */
+.dove-elenco { list-style: none; margin: 0; padding: 0; }
+.dove-elenco button { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 0; background: none; border: 0; border-bottom: 1px solid var(--linea); text-align: left; cursor: pointer; transition: padding .25s, background .25s; }
+.dove-elenco button:hover { padding-left: 6px; background: rgb(227 210 186 / .25); }
+.dove-elenco button > span { display: grid; gap: 2px; font-weight: 600; font-size: .92rem; }
+.dove-elenco small { font-weight: 400; font-size: .8rem; color: var(--tenue); }
+.dove-elenco i { margin-left: auto; font-style: normal; color: var(--bronzo); }
+.segnino { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 2px; min-width: 30px; height: 30px; font: 700 .62rem var(--sans); color: #fff; border-radius: 2px; }
+.segnino.icona { background: var(--avorio-2); color: var(--bronzo); }
+.segnino svg { width: 18px; height: 18px; }
+.segnino em { font-style: normal; display: grid; place-items: center; width: 24px; height: 30px; border-radius: 2px; }
 .dove-foto { aspect-ratio: 3 / 2; }
+@media (max-width: 720px) {
+  .mappa-dove { top: 12px; left: 12px; padding: 8px 10px; font-size: .56rem; }
+  .mappa-tasti { top: 12px; right: 12px; } .mappa-tasti button { width: 36px; height: 34px; }
+  .mappa-piede { bottom: 40px; gap: 6px; }
+  .mappa-viste button { padding: 9px 11px; font-size: .78rem; }
+  .mappa-linee button { width: 27px; }
+  .mappa-scheda { left: 12px; top: auto; bottom: 136px; width: calc(100% - 24px); }
+}
+/* prova A: mappa grande, pannello di lato con il grande angolo arrotondato del sito */
+.dove-grande { display: grid; grid-template-columns: minmax(300px, 360px) minmax(0, 1fr); margin-top: 30px; background: var(--gesso); border: 1px solid var(--linea); border-top-left-radius: clamp(60px, 8vw, 120px); overflow: hidden; }
+.dove-grande .mappa-quadro { min-height: clamp(560px, 80vh, 760px); border: 0; border-left: 1px solid var(--linea); }
+.dove-pannello { padding: clamp(30px, 3.4vw, 48px) clamp(22px, 2.4vw, 34px) 26px; display: flex; flex-direction: column; gap: 12px; }
+.dove-num { font: 500 .75rem var(--sans); letter-spacing: .1em; color: var(--bronzo); }
+.dove-via { font: 300 clamp(2rem, 2.7vw, 2.6rem)/1.04 var(--serif); }
+.dove-sotto { color: var(--tenue); font-size: .9rem; }
+.dove-azioni { display: grid; gap: 10px; margin: 10px 0 12px; }
+.dove-azioni .bottone { justify-content: space-between; }
+.dove-azioni .pillola { justify-self: stretch; align-self: stretch; justify-content: center; }
+.dove-titoletto { display: flex; justify-content: space-between; align-items: baseline; font: 600 .64rem var(--sans); letter-spacing: .22em; text-transform: uppercase; border-bottom: 1px solid var(--linea); padding-bottom: 10px; }
+.dove-titoletto span { font-weight: 500; letter-spacing: .1em; color: var(--tenue); }
+.dove-indicazioni { margin-top: auto; padding-top: 14px; color: var(--bronzo); font-weight: 600; font-size: .9rem; }
+.dove-riga { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px clamp(24px, 3vw, 44px); margin-top: 20px; align-items: start; }
+@media (max-width: 980px) {
+  .dove-grande { grid-template-columns: minmax(0, 1fr); border-top-left-radius: clamp(50px, 14vw, 90px); }
+  .dove-grande .mappa-quadro { order: -1; min-height: min(78vh, 560px); border-left: 0; border-bottom: 1px solid var(--linea); }
+  .dove-riga { grid-template-columns: minmax(0, 1fr); }
+}
 .orari { background: var(--gesso); border: 1px solid var(--linea); padding: 22px 24px; display: grid; gap: 12px; }
 .orari h3 { font: 400 1.5rem/1.15 var(--serif); }
 .orari dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; font-variant-numeric: tabular-nums; font-size: .95rem; }
@@ -457,7 +522,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .prossimo:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
   .prossimo:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--linea); }
   .fondo-griglia { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .mappa { min-height: 360px; }
+  .mappa-quadro { min-height: 440px; }
 }
 @media (max-width: 720px) {
   body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
@@ -490,7 +555,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tocco { display: grid; grid-template-columns: 1fr 1fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; padding-bottom: env(safe-area-inset-bottom, 0px); background: rgb(251 248 243 / .94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--linea-forte); }
   .tocco a { padding: 17px 10px; text-align: center; font-weight: 600; text-decoration: none; background: var(--gesso); }
   .tocco a + a { background: var(--inchiostro); color: var(--gesso); }
-  .mappa { min-height: 300px; }
+  .mappa-quadro { min-height: 460px; }
 }
 </style>
 </head>
@@ -792,21 +857,44 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     </div>
   </section>
 
-  <!-- 11. dove -->
+  <!-- 11. dove: mappa grande con il pannello di lato (8/11) -->
   <section class="sez" id="dove" aria-labelledby="t-dove">
     <div class="contenitore">
       <div class="sez-testa"><p class="occhio">Dove sono</p><h2 class="titolo" id="t-dove">In centro, <em>a due passi dal Palazzo di Giustizia</em></h2></div>
-      <div class="dove-griglia">
-        <div class="mappa" aria-hidden="true"><p class="riserva">Via Luciano Manara 13, Milano</p></div>
-        <div class="dove-destra">
-          <figure class="tendina dove-foto"><div class="tendina-dentro"><img src="immagini/studio.jpg" alt="All'ingresso di un palazzo, un cliente consegna le chiavi all'avvocata" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
-          <div class="orari">
-            <h3>Via Luciano Manara 13, Milano</h3>
-            <p>Secondo piano, con ascensore. Palazzo di Giustizia a 3 minuti a piedi, metro Sforza-Policlinico (M4) a 9, San Babila (M1, M4) a 12. Se non puoi venire, il primo incontro si fa in video.</p>
-            <dl><dt>Lunedì – venerdì</dt><dd>9:00 – 13:00</dd><dt></dt><dd>14:30 – 18:30</dd><dt>Sabato</dt><dd>su appuntamento</dd></dl>
-            <p class="adesso-riga"><span class="aperto" id="aperto-2"><i aria-hidden="true"></i><span></span></span></p>
-            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Luciano+Manara+13,+20122+Milano" target="_blank" rel="noopener">Indicazioni con Google Maps →</a>
+      <div class="dove-grande">
+        <aside class="dove-pannello">
+          <p class="dove-num">01 /</p>
+          <h3 class="dove-via">Via Luciano Manara 13</h3>
+          <p class="dove-sotto">20122 Milano · secondo piano, con ascensore</p>
+          <div class="dove-azioni"><button type="button" class="bottone" data-vista="citta">Vola sulla città <span class="freccia" aria-hidden="true">↗</span></button><button type="button" class="pillola" data-vista="studio">Torna allo studio</button></div>
+          <p class="dove-titoletto">Come arrivare <span>tocca una voce</span></p>
+          <ul class="dove-elenco">
+            <li><button type="button" data-luogo="tribunale"><b class="segnino icona" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 7.2 10 3.2l7.5 4M3 17.3h14M4 15.3h12M5.3 8.4v5.6M8.4 8.4v5.6M11.6 8.4v5.6M14.7 8.4v5.6"/></svg></b><span>Palazzo di Giustizia<small>3 minuti a piedi</small></span><i aria-hidden="true">↗</i></button></li>
+            <li><button type="button" data-luogo="sforza"><b class="segnino l4" aria-hidden="true">M4</b><span>Sforza-Policlinico<small>linea blu · 9 minuti a piedi</small></span><i aria-hidden="true">↗</i></button></li>
+            <li><button type="button" data-luogo="babila"><b class="segnino" aria-hidden="true"><em class="l1">M1</em><em class="l4">M4</em></b><span>San Babila<small>linee rossa e blu · 12 minuti a piedi</small></span><i aria-hidden="true">↗</i></button></li>
+            <li><button type="button" data-luogo="linate"><b class="segnino icona" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2c.8 0 1.2.8 1.2 1.6V8l6 3.4V13l-6-1.8v3.6l1.8 1.4V18L10 17.1 7 18v-1.8l1.8-1.4v-3.6L2.8 13v-1.6l6-3.4V3.6C8.8 2.8 9.2 2 10 2z"/></svg></b><span>Dall'aeroporto di Linate<small>M4 senza cambi fino a Sforza-Policlinico</small></span><i aria-hidden="true">↗</i></button></li>
+            <li><button type="button" data-luogo="centrale"><b class="segnino icona" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="2.5" width="10" height="11.5" rx="2.5"/><path d="M5 8.5h10M7.6 17.6 9 14.2M12.4 17.6 11 14.2"/><circle cx="7.9" cy="11.3" r=".6" fill="currentColor"/><circle cx="12.1" cy="11.3" r=".6" fill="currentColor"/></svg></b><span>Dalla Stazione Centrale<small>M3 fino a Crocetta, poi 12 minuti a piedi</small></span><i aria-hidden="true">↗</i></button></li>
+          </ul>
+          <a class="dove-indicazioni" href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Luciano+Manara+13,+20122+Milano" target="_blank" rel="noopener">Indicazioni con Google Maps →</a>
+        </aside>
+        <div class="mappa-quadro" id="mappa-milano">
+          <div class="mappa" role="region" aria-label="Mappa di Milano: lo studio in Via Luciano Manara 13, il Palazzo di Giustizia e la metropolitana"><p class="riserva">Via Luciano Manara 13, Milano</p></div>
+          <p class="mappa-dove" aria-live="polite"><i aria-hidden="true"></i><span>Vicino allo studio</span></p>
+          <div class="mappa-tasti"><button type="button" data-zoom="+" aria-label="Avvicina">+</button><button type="button" data-zoom="-" aria-label="Allontana">−</button><button type="button" data-piatta aria-label="Cambia tra vista in rilievo e vista piatta">2D</button></div>
+          <div class="mappa-piede">
+            <div class="mappa-viste" role="group" aria-label="Vista della mappa"><button type="button" data-vista="studio" aria-pressed="true">Lo studio</button><button type="button" data-vista="tribunale" aria-pressed="false">Il tribunale</button><button type="button" data-vista="citta" aria-pressed="false">La città</button></div>
+            <div class="mappa-linee" role="group" aria-label="Linee della metropolitana da mostrare"><span>Metro</span><button type="button" class="l1" data-linea="1" aria-pressed="true">M1</button><button type="button" class="l2" data-linea="2" aria-pressed="true">M2</button><button type="button" class="l3" data-linea="3" aria-pressed="true">M3</button><button type="button" class="l4" data-linea="4" aria-pressed="true">M4</button><button type="button" class="l5" data-linea="5" aria-pressed="true">M5</button></div>
           </div>
+          <div class="mappa-scheda" hidden><button type="button" class="mappa-chiudi" aria-label="Chiudi">×</button><small>Come arrivare</small><h4></h4><p></p><a target="_blank" rel="noopener"></a></div>
+        </div>
+      </div>
+      <div class="dove-riga">
+        <figure class="tendina dove-foto"><div class="tendina-dentro"><img src="immagini/studio.jpg" alt="All'ingresso di un palazzo, un cliente consegna le chiavi all'avvocata" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+        <div class="orari">
+          <h3>Quando trovarmi</h3>
+          <p>Se non puoi venire, il primo incontro si fa in video.</p>
+          <dl><dt>Lunedì – venerdì</dt><dd>9:00 – 13:00</dd><dt></dt><dd>14:30 – 18:30</dd><dt>Sabato</dt><dd>su appuntamento</dd></dl>
+          <p class="adesso-riga"><span class="aperto" id="aperto-2"><i aria-hidden="true"></i><span></span></span></p>
         </div>
       </div>
     </div>
@@ -846,6 +934,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <nav class="tocco" aria-label="Contatto rapido"><a href="tel:+390200000000">Chiama</a><a href="#scrivi">Scrivimi</a></nav>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.js"></script>
+<script src="mappa-metro.js"></script>
 <script>
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const MUOVI = !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1229,32 +1318,135 @@ $('.chiudi-menu').addEventListener('click', () => menu(false));
 $$('#pannello-menu a').forEach(a => a.addEventListener('click', () => menu(false)));
 addEventListener('keydown', e => { if (e.key === 'Escape') menu(false); });
 
-/* ---------- la mappa vera, nei colori del gesso ---------- */
-function mappaCitta(box) {
+/* ---------- la mappa vera di Milano (8/11): palazzi in 3D, metro M1-M5, studio e Palazzo di Giustizia ----------
+   Dal pacchetto «Mappa 3D Besana» di Franco, rivisto: colori del sito, dati della metro in mappa-metro.js (un .js si apre anche con il doppio clic,
+   un .json no), un solo MapLibre. Piano dell'animazione: si apre sullo studio; quando la mappa entra nello schermo sale sulla città con le metro,
+   si ferma, poi torna giù sullo studio (il finale è lo studio). Basta toccarla per fermare il giro.
+   Zoom mai sotto 14 con i palazzi in rilievo (LEZIONI 7/11, «grumi»): nella vista della città le case svaniscono e restano strade e metro. */
+function mappaMilano(quadro) {
+  const box = quadro && $('.mappa', quadro);
   if (!box || !window.maplibregl) return;
-  const SEDE = [9.20256, 45.46097], altezza = ['coalesce', ['get', 'render_height'], 8];
+  const zona = quadro.closest('section') || quadro; // i pulsanti possono stare anche fuori dalla mappa (pannello, scheda degli orari)
+  const SEDE = [9.20256, 45.46097], TRIBUNALE = [9.20134, 45.46106], INDIRIZZO = 'Via+Luciano+Manara+13,+20122+Milano';
+  const COL = { 1: '#c34840', 2: '#418269', 3: '#d9a93a', 4: '#4b79ad', 5: '#977ea9' }, NOMI_L = { 1: 'rossa', 2: 'verde', 3: 'gialla', 4: 'blu', 5: 'lilla' };
+  const colore = v => ['match', v, '1', COL[1], '2', COL[2], '3', COL[3], '4', COL[4], COL[5]];
+  const M = window.METRO || { linee: { type: 'FeatureCollection', features: [] }, fermate: { type: 'FeatureCollection', features: [] } };
+  const nome = ['coalesce', ['get', 'name:it'], ['get', 'name']], altezza = ['coalesce', ['get', 'render_height'], 8];
   const principali = ['all', ['in', ['get', 'class'], ['literal', ['primary', 'secondary', 'tertiary', 'trunk', 'motorway']]], ['!=', ['get', 'brunnel'], 'tunnel']];
   const largoV = (a, b) => ['interpolate', ['exponential', 1.6], ['zoom'], 12, a, 17, b];
-  const stile = { version: 8, sources: { osm: { type: 'vector', url: 'https://tiles.openfreemap.org/planet', attribution: '© OpenStreetMap' } }, layers: [
-    { id: 'fondo', type: 'background', paint: { 'background-color': '#eee6da' } },
-    { id: 'verde', type: 'fill', source: 'osm', 'source-layer': 'landcover', filter: ['in', ['get', 'class'], ['literal', ['grass', 'wood', 'farmland']]], paint: { 'fill-color': '#e4e0cd' } },
-    { id: 'parchi', type: 'fill', source: 'osm', 'source-layer': 'park', paint: { 'fill-color': '#e4e0cd' } },
-    { id: 'acqua', type: 'fill', source: 'osm', 'source-layer': 'water', paint: { 'fill-color': '#d3dcdc' } },
-    { id: 'vie', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: ['==', ['get', 'class'], 'minor'], layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': '#f8f3eb', 'line-width': largoV(0.6, 7) } },
-    { id: 'binari', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: ['==', ['get', 'class'], 'rail'], paint: { 'line-color': '#d2c4ae', 'line-width': largoV(0.8, 2.5) } },
-    { id: 'corsi', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: principali, layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': '#cfb18a', 'line-width': largoV(1.2, 12) } },
-    { id: 'case', type: 'fill-extrusion', source: 'osm', 'source-layer': 'building', minzoom: 13, paint: { 'fill-extrusion-color': ['interpolate', ['linear'], altezza, 0, '#efe8dd', 12, '#e6dccd', 30, '#dccfbc'],
-      'fill-extrusion-height': ['case', ['<=', altezza, 5], ['+', 7, ['%', ['to-number', ['id'], 3], 9]], altezza], 'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0], 'fill-extrusion-opacity': 0.95 } }],
+  const stile = { version: 8, glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+    sources: {
+      osm: { type: 'vector', url: 'https://tiles.openfreemap.org/planet', attribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' },
+      linee: { type: 'geojson', data: M.linee, attribution: 'Metro: <a href="https://gisportal.comune.milano.it/server/rest/services/D_Mobilita/ATM_Metro/MapServer" target="_blank" rel="noopener">Comune di Milano</a>, CC BY 4.0' },
+      fermate: { type: 'geojson', data: M.fermate } },
+    layers: [
+      { id: 'fondo', type: 'background', paint: { 'background-color': '#eee6da' } },
+      { id: 'verde', type: 'fill', source: 'osm', 'source-layer': 'landcover', filter: ['in', ['get', 'class'], ['literal', ['grass', 'wood', 'farmland']]], paint: { 'fill-color': '#e4e0cd' } },
+      { id: 'parchi', type: 'fill', source: 'osm', 'source-layer': 'park', paint: { 'fill-color': '#e4e0cd' } },
+      { id: 'acqua', type: 'fill', source: 'osm', 'source-layer': 'water', paint: { 'fill-color': '#d3dcdc' } },
+      { id: 'vie', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: ['==', ['get', 'class'], 'minor'], layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': '#f8f3eb', 'line-width': largoV(0.6, 7) } },
+      { id: 'binari', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: ['==', ['get', 'class'], 'rail'], paint: { 'line-color': '#d2c4ae', 'line-width': largoV(0.8, 2.5) } },
+      { id: 'corsi', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: principali, layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': '#d9c09c', 'line-width': largoV(1.2, 12), 'line-opacity': ['interpolate', ['linear'], ['zoom'], 12.5, 0.45, 14.5, 1] } },
+      { id: 'metro', type: 'line', source: 'linee', layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': colore(['get', 'l']), 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 2.4, 15, 3.6, 18, 6], 'line-opacity': 0.85 } },
+      { id: 'case', type: 'fill-extrusion', source: 'osm', 'source-layer': 'building', minzoom: 13.8, filter: ['!=', ['get', 'hide_3d'], true],
+        paint: { 'fill-extrusion-color': ['interpolate', ['linear'], altezza, 0, '#efe8dd', 12, '#e6dccd', 30, '#dccfbc'],
+          'fill-extrusion-height': ['case', ['<=', altezza, 5], ['+', 7, ['%', ['to-number', ['id'], 3], 9]], altezza],
+          'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0], 'fill-extrusion-opacity': ['interpolate', ['linear'], ['zoom'], 13.9, 0, 14.4, 0.95] } },
+      { id: 'nomi-vie', type: 'symbol', source: 'osm', 'source-layer': 'transportation_name', minzoom: 15.2, filter: ['in', ['get', 'class'], ['literal', ['minor', 'tertiary', 'secondary', 'primary', 'trunk']]],
+        layout: { 'symbol-placement': 'line', 'text-field': nome, 'text-font': ['Noto Sans Regular'], 'text-size': ['interpolate', ['linear'], ['zoom'], 15, 10, 18, 13], 'text-max-angle': 30, 'text-padding': 2 },
+        paint: { 'text-color': '#7d6e60', 'text-halo-color': '#fbf8f3', 'text-halo-width': 1.6 } },
+      { id: 'quartieri', type: 'symbol', source: 'osm', 'source-layer': 'place', maxzoom: 14.6, filter: ['in', ['get', 'class'], ['literal', ['suburb', 'quarter', 'neighbourhood']]],
+        layout: { 'text-field': ['upcase', nome], 'text-font': ['Noto Sans Regular'], 'text-size': 10, 'text-letter-spacing': 0.2, 'text-max-width': 8 },
+        paint: { 'text-color': '#a3927f', 'text-halo-color': '#f6f1e9', 'text-halo-width': 1.2 } },
+      { id: 'fermate', type: 'circle', source: 'fermate',
+        paint: { 'circle-color': '#fbf8f3', 'circle-radius': ['interpolate', ['linear'], ['zoom'], 12, 3, 15, 5, 18, 8], 'circle-stroke-color': colore(['slice', ['get', 'l'], 0, 1]), 'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 12, 1.8, 16, 3] } },
+      { id: 'nomi-fermate', type: 'symbol', source: 'fermate', minzoom: 12.6,
+        layout: { 'text-field': ['get', 'n'], 'text-font': ['Noto Sans Bold'], 'text-size': ['interpolate', ['linear'], ['zoom'], 12.6, 10, 16, 12.5], 'text-offset': [0, 1.1], 'text-anchor': 'top', 'text-padding': 4 },
+        paint: { 'text-color': '#3b3029', 'text-halo-color': '#fbf8f3', 'text-halo-width': 1.8 } }],
     light: { anchor: 'viewport', color: '#fff6ea', intensity: 0.3, position: [1.4, 200, 35] } };
-  let map; try { map = new maplibregl.Map({ container: box, style: stile, center: SEDE, zoom: 15.6, pitch: 55, bearing: -15, interactive: false, attributionControl: false, fadeDuration: 0, preserveDrawingBuffer: true }); } catch (e) { return; }
-  map.addControl(new maplibregl.AttributionControl({ compact: false }), 'top-left');
-  const segno = (p, html, cls) => { const e = document.createElement('div'); e.className = cls; e.innerHTML = html; new maplibregl.Marker({ element: e, anchor: 'bottom' }).setLngLat(p).addTo(map); };
+
+  const tel = () => box.clientWidth < 560;
+  const VISTE = () => tel() ? {
+      studio: { center: [9.20215, 45.46112], zoom: 16.5, pitch: 55, bearing: -62 },
+      tribunale: { center: [9.20120, 45.46112], zoom: 16.7, pitch: 52, bearing: 25 },
+      citta: { center: [9.1985, 45.4655], zoom: 12.6, pitch: 0, bearing: 0 } } : {
+      studio: { center: [9.20205, 45.46108], zoom: 16.9, pitch: 58, bearing: -62 },
+      tribunale: { center: [9.20120, 45.46112], zoom: 17.1, pitch: 54, bearing: 25 },
+      citta: { center: [9.1965, 45.4660], zoom: 13.3, pitch: 18, bearing: 0 } };
+  const NOMI = { studio: 'Vicino allo studio', tribunale: 'Palazzo di Giustizia', citta: 'Milano e la metro' };
+  let map;
+  try { map = new maplibregl.Map({ container: box, style: stile, ...VISTE().studio, minZoom: 11, maxZoom: 18.5, maxPitch: 65, maxBounds: [[9.04, 45.37], [9.34, 45.57]],
+    attributionControl: false, cooperativeGestures: true, fadeDuration: 0, preserveDrawingBuffer: true,
+    locale: { 'CooperativeGesturesHandler.WindowsHelpText': 'Per avvicinare la mappa tieni premuto Ctrl e usa la rotella', 'CooperativeGesturesHandler.MacHelpText': 'Per avvicinare la mappa tieni premuto ⌘ e usa la rotella', 'CooperativeGesturesHandler.MobileHelpText': 'Usa due dita per muovere la mappa' } }); } catch (e) { return; }
+  map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+
+  const segno = (p, html, cls) => { const e = document.createElement('div'); e.className = cls; e.innerHTML = html; new maplibregl.Marker({ element: e, anchor: 'bottom' }).setLngLat(p).addTo(map); return e; };
   segno(SEDE, '<span class="mappa-goccia"></span><span class="mappa-anello"></span>', 'segno-sede');
-  segno(SEDE, '<span class="nome-mappa qui">Studio Angelicata</span>', '');
-  segno([9.20134, 45.46106], '<span class="nome-mappa">Palazzo di Giustizia</span>', '');
-  map.on('load', () => { box.classList.add('mappa-vera');
-    if (MUOVI) { let ultimo = 0; (function gira(t) { if (box.dataset.visibile !== '0') map.setBearing(map.getBearing() + Math.min(50, t - ultimo) * 0.003); ultimo = t; requestAnimationFrame(gira); })(0); } });
-  new IntersectionObserver(e => { box.dataset.visibile = e[0].isIntersecting ? '1' : '0'; }).observe(box);
+  segno(SEDE, '<span class="nome-mappa qui">Studio Angelicata<small>Via Manara 13</small></span>', 'segno-nome').addEventListener('click', () => vola('studio'));
+  segno(TRIBUNALE, '<span class="nome-mappa">Palazzo di Giustizia</span>', 'segno-nome').addEventListener('click', () => vola('tribunale'));
+  const lontano = () => quadro.classList.toggle('mappa-lontana', map.getZoom() < 14.6);
+  map.on('zoom', lontano); map.on('moveend', lontano);
+
+  // viste, giro iniziale, scheda del luogo
+  const etichetta = $('.mappa-dove span', quadro), sch = $('.mappa-scheda', quadro), piatta = $('[data-piatta]', quadro);
+  let giro = null, giroFatto = false, piatto = false; // piatto: l'ha scelto chi guarda con il tasto 2D
+  const fermaGiro = () => { clearTimeout(giro); giro = null; giroFatto = true; };
+  const segna = (id, testo) => { $$('[data-vista]', zona).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.vista === id))); if (etichetta) etichetta.textContent = testo || NOMI[id] || 'Esplora Milano'; };
+  function scheda(d) { if (!sch) return; sch.hidden = !d; if (!d) return; $('h4', sch).textContent = d.titolo; $('p', sch).innerHTML = d.testo; const a = $('a', sch); a.href = d.link; a.textContent = 'Indicazioni con Google Maps ↗'; }
+  function vola(id, durata, dalGiro) { if (!dalGiro) fermaGiro(); scheda(null); segna(id); map.flyTo({ ...VISTE()[id], duration: MUOVI ? (durata || 3000) : 0, essential: true }); }
+  const metri = c => { const r = Math.PI / 180; return 6371000 * Math.hypot((c[0] - SEDE[0]) * r * Math.cos(SEDE[1] * r), (c[1] - SEDE[1]) * r); };
+  const minuti = c => Math.max(1, Math.round(metri(c) * 1.3 / 80));
+  const bollini = l => l.split(',').map(n => `<b class="bollino l${n}">M${n}</b>`).join('');
+  const verso = c => `https://www.google.com/maps/dir/?api=1&origin=${c[1]},${c[0]}&destination=${INDIRIZZO}&travelmode=transit`;
+  function fermata(n, l, c) {
+    fermaGiro(); segna('', n);
+    const m = metri(c), linee = l.split(',').map(x => NOMI_L[x]);
+    scheda({ titolo: n, link: verso(c), testo: bollini(l) + ' ' + (linee.length > 1 ? 'linee ' + linee.join(' e ') : 'linea ' + linee[0]) + (m < 1500 ? ` · ${minuti(c)} minuti a piedi dallo studio` : '') });
+    map.flyTo({ center: c, zoom: 16.2, pitch: piatto ? 0 : 52, bearing: -20, duration: MUOVI ? 2800 : 0, essential: true });
+  }
+  const perNome = n => M.fermate.features.find(f => f.properties.n === n);
+  const vaiFermata = n => { const f = perNome(n); if (f) fermata(f.properties.n, f.properties.l, f.geometry.coordinates); };
+  const LUOGHI = {
+    tribunale: () => vola('tribunale'),
+    sforza: () => vaiFermata('Sforza-Policlinico'),
+    babila: () => vaiFermata('San Babila'),
+    crocetta: () => vaiFermata('Crocetta'),
+    linate: () => { fermaGiro(); segna('', 'Da Linate allo studio'); const f = perNome('Linate Aeroporto'), c = f ? f.geometry.coordinates : [9.2785, 45.4601];
+      scheda({ titolo: 'Dall’aeroporto di Linate', link: verso(c), testo: bollini('4') + ' linea blu senza cambi fino a Sforza-Policlinico, circa un quarto d’ora; poi 9 minuti a piedi.' });
+      map.flyTo({ center: [(c[0] + SEDE[0]) / 2, (c[1] + SEDE[1]) / 2 + 0.002], zoom: tel() ? 11 : 12.1, pitch: 0, bearing: 0, duration: MUOVI ? 3200 : 0, essential: true }); },
+    centrale: () => { fermaGiro(); segna('', 'Dalla Stazione Centrale'); const f = perNome('Centrale FS'), c = f ? f.geometry.coordinates : [9.2026, 45.4844];
+      scheda({ titolo: 'Dalla Stazione Centrale', link: verso(c), testo: bollini('3') + ' linea gialla fino a Crocetta, sei fermate; poi 12 minuti a piedi.' });
+      map.flyTo({ center: [9.1990, 45.4728], zoom: tel() ? 12.6 : 13.3, pitch: 0, bearing: 0, duration: MUOVI ? 3200 : 0, essential: true }); } };
+
+  $$('[data-vista]', zona).forEach(b => b.addEventListener('click', () => vola(b.dataset.vista)));
+  $$('[data-luogo]', zona).forEach(b => b.addEventListener('click', () => { LUOGHI[b.dataset.luogo] && LUOGHI[b.dataset.luogo](); if (!largo()) box.scrollIntoView({ behavior: MUOVI ? 'smooth' : 'auto', block: 'center' }); }));
+  $$('[data-zoom]', quadro).forEach(b => b.addEventListener('click', () => { fermaGiro(); b.dataset.zoom === '+' ? map.zoomIn() : map.zoomOut(); }));
+  piatta && piatta.addEventListener('click', () => { fermaGiro(); piatto = map.getPitch() > 10; map.easeTo({ pitch: piatto ? 0 : 58, duration: MUOVI ? 900 : 0 }); });
+  map.on('pitch', () => { if (piatta) piatta.textContent = map.getPitch() > 10 ? '2D' : '3D'; });
+  $('.mappa-chiudi', quadro)?.addEventListener('click', () => scheda(null));
+
+  // linee della metro da accendere e spegnere
+  const attive = new Set(['1', '2', '3', '4', '5']);
+  $$('[data-linea]', quadro).forEach(b => b.addEventListener('click', () => {
+    const n = b.dataset.linea; attive.has(n) ? attive.delete(n) : attive.add(n); b.setAttribute('aria-pressed', String(attive.has(n)));
+    const lista = [...attive], f = lista.length ? ['any', ...lista.map(x => ['in', x, ['get', 'l']])] : ['==', ['get', 'l'], '-'];
+    map.setFilter('metro', ['in', ['get', 'l'], ['literal', lista]]); map.setFilter('fermate', f); map.setFilter('nomi-fermate', f); }));
+
+  ['fermate', 'nomi-fermate'].forEach(id => {
+    map.on('click', id, e => { const f = e.features && e.features[0]; if (f) fermata(f.properties.n, f.properties.l, f.geometry.coordinates); });
+    map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+    map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; }); });
+  map.on('movestart', e => { if (e.originalEvent) { fermaGiro(); segna('', 'Esplora Milano'); } });
+  box.addEventListener('pointerdown', fermaGiro);
+
+  // il giro: una volta sola, quando la mappa è ben dentro lo schermo
+  let pronta = false, vista = false;
+  const parti = () => { if (!pronta || !vista || giroFatto || !MUOVI || giro) return;
+    giro = setTimeout(() => { vola('citta', 4200, true); giro = setTimeout(() => { vola('studio', 4200, true); giroFatto = true; giro = null; }, 4200 + 2600); }, 900); };
+  map.on('load', () => { pronta = true; if (tel()) { const a = $('.maplibregl-ctrl-attrib', box); a && a.classList.remove('maplibregl-compact-show'); } quadro.classList.add('mappa-pronta'); lontano(); parti(); });
+  new IntersectionObserver(e => { vista = e[0].isIntersecting; parti(); }, { threshold: 0.5 }).observe(box);
 }
 
 /* ---------- partenza ---------- */
@@ -1267,7 +1459,7 @@ impostaPila();
 suScroll();
 const entra = () => document.body.classList.add('entrata');
 (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 700))]) : Promise.resolve()).then(() => requestAnimationFrame(entra));
-try { mappaCitta($('.mappa')); } catch (e) {}
+try { mappaMilano($('#mappa-milano')); } catch (e) {}
 </script>
 </body>
 </html>
