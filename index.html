@@ -37,7 +37,7 @@ if (location.hash.length > 1) { window.__arrivo = decodeURIComponent(location.ha
 }
 * { box-sizing: border-box; }
 @view-transition { navigation: auto; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(76px + var(--mt, 0px)); }
 body { margin: 0; background: var(--avorio); color: var(--inchiostro); font: 400 16px/1.6 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 /* grana di carta su tutta la pagina */
 body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .55; mix-blend-mode: multiply;
@@ -517,7 +517,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   :root { --alto: 60px; }
   .apertura-foto::after, .ch-apertura-foto::after { display: none; }
   .apertura { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .apertura-pannello { margin-right: 0; padding: 150px var(--gutter) 64px; border-bottom-right-radius: clamp(90px, 22vw, 180px); }
+  .apertura-pannello { margin-right: 0; padding: calc(150px + var(--mt, 0px)) var(--gutter) 64px; border-bottom-right-radius: clamp(90px, 22vw, 180px); }
   .apertura-foto { height: min(92vw, 640px); margin-top: -70px; }
   .verticale { display: none; }
   .metodo-testa, .lastra-dentro, .racconta-griglia, .materie-griglia, .calcolo, .chi-griglia, .portare-griglia, .scrivi-griglia, .dove-griglia { grid-template-columns: minmax(0, 1fr); }
@@ -536,14 +536,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 @media (max-width: 720px) {
   body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
-  html { scroll-padding-top: 66px; }
+  html { scroll-padding-top: calc(66px + var(--mt, 0px)); }
   .testata-riga { height: 66px; gap: 14px; }
   .monogramma { width: 38px; height: 38px; }
   .marchio-nome b { font-size: 1.22rem; }
   .aperto, .dimostra, .filtri-corti { display: none; }
   .apri-menu { margin-left: auto; }
   .filtri { gap: 18px; }
-  .apertura-pannello { padding-top: 136px; gap: 22px; }
+  .apertura-pannello { padding-top: calc(136px + var(--mt, 0px)); gap: 22px; }
   .apertura h1 { font-size: clamp(3rem, 15vw, 4.2rem); }
   .apertura-piede { display: none; }
   /* sul telefono il cerchio tiene solo il titolo; campo e frasi sotto */
@@ -566,6 +566,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .tocco a + a { background: var(--inchiostro); color: var(--gesso); }
   .mappa-quadro { min-height: 460px; }
 }
+
+/* 10/11, Franco: «manca in alto Chi sono, Per capire… appena si arriva sulla pagina»: sul telefono le voci stanno in vista sotto il nome, in una riga che scorre di lato */
+.menu-tel { display: none; }
+@media (max-width: 1220px) {
+  :root { --mt: 42px; }
+  .menu-tel { display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 0 var(--gutter); border-top: 1px solid var(--linea); }
+  .menu-tel::-webkit-scrollbar { display: none; }
+  .menu-tel a { flex: none; position: relative; text-decoration: none; font: 500 .9rem/1 var(--sans); color: var(--tenue); padding: 13px 0 14px; white-space: nowrap; }
+  .menu-tel a.attiva { color: var(--inchiostro); }
+  .menu-tel a.attiva::after { content: ""; position: absolute; left: 0; right: 0; bottom: 7px; height: 1.5px; background: var(--bronzo-linea); }
+}
 </style>
 </head>
 <body>
@@ -587,6 +598,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     <a class="tel" href="tel:+390200000000">02 0000 0000</a>
     <button type="button" class="apri-menu" aria-label="Apri il menu" aria-expanded="false" aria-controls="pannello-menu"><span></span><span></span></button>
   </div>
+  <nav class="menu-tel" aria-label="Pagine"><a href="chi-sono.html">Chi sono</a><a href="#metodo">Il metodo</a><a href="#materie">Materie</a><a href="#scadenze">Scadenze</a><a href="per-capire.html">Per capire</a><a href="#scrivi">Contatti</a></nav>
   <div class="testata-sotto">
     <div>
       <div class="contenitore">

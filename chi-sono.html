@@ -33,7 +33,7 @@ if (location.hash.length > 1) { window.__arrivo = decodeURIComponent(location.ha
 }
 * { box-sizing: border-box; }
 @view-transition { navigation: auto; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(76px + var(--mt, 0px)); }
 body { margin: 0; background: var(--avorio); color: var(--inchiostro); font: 400 16px/1.6 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
 body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .55; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
@@ -122,7 +122,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
 
 /* ---------- 1. apertura: titolo a sinistra, la costruzione a destra con l'angolo arrotondato in basso ---------- */
 .ch-apertura { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); min-height: min(90svh, 880px); }
-.ch-apertura-testo { padding: calc(130px + 6vh) clamp(24px, 5vw, 84px) 9vh var(--bordo-sx); display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.ch-apertura-testo { padding: calc(130px + 6vh + var(--mt, 0px)) clamp(24px, 5vw, 84px) 9vh var(--bordo-sx); display: flex; flex-direction: column; justify-content: center; gap: 22px; }
 .ch-apertura h1 { font: 300 clamp(3.6rem, 7.6vw, 7.6rem)/.95 var(--serif); letter-spacing: -.015em; }
 .ch-apertura h1 em { font-style: italic; color: var(--bronzo); }
 .ch-apertura-testo p:not(.occhio) { color: var(--tenue); font-size: 1.06rem; max-width: 50ch; }
@@ -276,7 +276,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
   :root { --alto: 60px; }
   .apertura-foto::after, .ch-apertura-foto::after { display: none; }
   .ch-apertura { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .ch-apertura-testo { padding: 150px var(--gutter) 48px; }
+  .ch-apertura-testo { padding: calc(150px + var(--mt, 0px)) var(--gutter) 48px; }
   .ch-apertura-foto { height: min(70vw, 520px); margin-left: var(--gutter); }
   .piacere, .ch-due, .ch-studio, .impegno { grid-template-columns: minmax(0, 1fr); }
   .piacere-foto { max-width: 400px; }
@@ -298,12 +298,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
   .apri-menu { margin-left: auto; }
   .sottomenu { gap: 16px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .sottomenu a { white-space: nowrap; }
-  .ch-apertura-testo { padding-top: 140px; }
+  .ch-apertura-testo { padding-top: calc(140px + var(--mt, 0px)); }
   .ch-apertura h1 { font-size: clamp(3.2rem, 16vw, 4.4rem); }
   .come-griglia, .fondo-griglia { grid-template-columns: minmax(0, 1fr); }
   .tocco { display: grid; grid-template-columns: 1fr 1fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; padding-bottom: env(safe-area-inset-bottom, 0px); background: rgb(251 248 243 / .94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--linea-forte); }
   .tocco a { padding: 17px 10px; text-align: center; font-weight: 600; text-decoration: none; background: var(--gesso); }
   .tocco a + a { background: var(--inchiostro); color: var(--gesso); }
+}
+
+/* 10/11, Franco: «manca in alto Chi sono, Per capire… appena si arriva sulla pagina»: sul telefono le voci stanno in vista sotto il nome, in una riga che scorre di lato */
+.menu-tel { display: none; }
+@media (max-width: 1220px) {
+  :root { --mt: 42px; }
+  .menu-tel { display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 0 var(--gutter); border-top: 1px solid var(--linea); }
+  .menu-tel::-webkit-scrollbar { display: none; }
+  .menu-tel a { flex: none; position: relative; text-decoration: none; font: 500 .9rem/1 var(--sans); color: var(--tenue); padding: 13px 0 14px; white-space: nowrap; }
+  .menu-tel a.attiva { color: var(--inchiostro); }
+  .menu-tel a.attiva::after { content: ""; position: absolute; left: 0; right: 0; bottom: 7px; height: 1.5px; background: var(--bronzo-linea); }
 }
 </style>
 </head>
@@ -323,6 +334,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
     <a class="tel" href="tel:+390200000000">02 0000 0000</a>
     <button type="button" class="apri-menu" aria-label="Apri il menu" aria-expanded="false" aria-controls="pannello-menu"><span></span><span></span></button>
   </div>
+  <nav class="menu-tel" aria-label="Pagine"><a href="chi-sono.html" class="attiva" aria-current="page">Chi sono</a><a href="index.html#metodo">Il metodo</a><a href="index.html#materie">Materie</a><a href="index.html#scadenze">Scadenze</a><a href="per-capire.html">Per capire</a><a href="index.html#scrivi">Contatti</a></nav>
   <div class="testata-sotto">
     <div>
       <div class="contenitore">
