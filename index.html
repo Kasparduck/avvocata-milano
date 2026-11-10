@@ -577,6 +577,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .menu-tel a.attiva { color: var(--inchiostro); }
   .menu-tel a.attiva::after { content: ""; position: absolute; left: 0; right: 0; bottom: 7px; height: 1.5px; background: var(--bronzo-linea); }
 }
+
+/* 10/11, Franco: in ogni passaggio la foto diventa piccola in alto a destra e sotto c'è un cerchio: il logo si apre a lamelle,
+   si avanza nello studio vero (un tempo per verbo: metà corridoio, porta dello studio, dentro la stanza) e le lamelle si richiudono nel logo */
+/* la foto si allarga a destra (titolo e testo a sinistra, uno sotto l'altro) e il cerchio sta fermo nel suo quarto in basso a sinistra:
+   alto metà foto, toccando il bordo di sotto e la linea di metà, al centro del quarto (Franco: «stia il più precisamente possibile nel quadrante inferiore sinistro») */
+.lastra-dentro { grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); grid-template-areas: "tit lato" "testo lato"; align-items: start; }
+.lastra-dentro > :first-child { grid-area: tit; } .lastra-testo { grid-area: testo; } .lastra-lato { grid-area: lato; }
+.lastra-lato { position: relative; }
+.lastra-lato .lastra-foto { width: 100%; }
+.cerchio-passo { position: absolute; z-index: 2; margin: 0; left: 25%; bottom: 0; height: 50%; aspect-ratio: 1; transform: translateX(-50%); }
+.cerchio-passo canvas { display: block; width: 100%; height: 100%; cursor: pointer; }
+@media (max-width: 980px) {
+  .lastra-dentro { grid-template-columns: minmax(0, 1fr); grid-template-areas: "tit" "testo" "lato"; }
+}
 </style>
 </head>
 <body>
@@ -649,7 +663,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <p>Porta quello che hai: la lettera, il contratto, i messaggi. Cosa serve, materia per materia, lo trovi più in basso.</p>
             <a class="pillola" href="#portare">Cosa portare</a>
           </div>
-          <figure class="tendina lastra-foto"><div class="tendina-dentro"><img src="immagini/ascoltare.jpg" alt="Una scultura di pietra a forma di orecchio, scaldata da una luce ambrata" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+          <div class="lastra-lato">
+            <figure class="tendina lastra-foto" style="aspect-ratio: 1232 / 928"><div class="tendina-dentro"><img src="immagini/ascoltare.jpg" alt="Una scultura di pietra a forma di orecchio, scaldata da una luce ambrata" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+            <figure class="cerchio-passo" data-passo="0"><canvas role="img" aria-label="Il logo si apre come un obiettivo: si avanza fino a metà del corridoio dello studio"></canvas></figure>
+          </div>
         </div>
       </article>
       <article class="lastra" aria-labelledby="t-l2">
@@ -661,7 +678,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <p>Prima di cominciare ricevi un preventivo scritto, voce per voce: sai quanto spendi prima di decidere.</p>
             <a class="pillola" href="#prima">Il preventivo</a>
           </div>
-          <figure class="tendina lastra-foto"><div class="tendina-dentro"><img src="immagini/spiegare.jpg" alt="Sotto un arco di pietra, una figura indica un disco d'oro a due figure sedute che ascoltano" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+          <div class="lastra-lato">
+            <figure class="tendina lastra-foto" style="aspect-ratio: 1600 / 1278"><div class="tendina-dentro"><img src="immagini/spiegare.jpg" alt="Sotto un arco di pietra, una figura indica un disco d'oro a due figure sedute che ascoltano" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+            <figure class="cerchio-passo" data-passo="1"><canvas role="img" aria-label="Il logo si riapre: ci si affaccia alla porta dello studio"></canvas></figure>
+          </div>
         </div>
       </article>
       <article class="lastra" aria-labelledby="t-l3">
@@ -673,7 +693,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <p>Non passi da un ufficio all'altro: dal primo incontro alla fine parli sempre con me.</p>
             <a class="pillola" href="#chi">Chi sono</a>
           </div>
-          <figure class="tendina lastra-foto"><div class="tendina-dentro"><img src="immagini/difendere.jpg" alt="Un'onda di pietra nel deserto si curva a proteggere una fiamma accesa" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+          <div class="lastra-lato">
+            <figure class="tendina lastra-foto" style="aspect-ratio: 1232 / 928"><div class="tendina-dentro"><img src="immagini/difendere.jpg" alt="Un'onda di pietra nel deserto si curva a proteggere una fiamma accesa" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+            <figure class="cerchio-passo" data-passo="2"><canvas role="img" aria-label="Il logo si riapre: si entra nella stanza dell'avvocato e lo sguardo gira verso la scrivania"></canvas></figure>
+          </div>
         </div>
       </article>
     </div>
@@ -854,17 +877,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
           <p class="spiega">Le richieste con una scadenza vicina o con parole come «udienza», «notifica» o «decreto» salgono in cima con l'etichetta Urgente; le altre si dividono per materia. Le ordina una regola automatica, le legge sempre una persona.</p>
         </div>
       </div>
-      <div class="crescere">
-        <h3>Il sito può crescere, <em>quando lo studio vuole</em></h3>
-        <div class="arrivo">
-          <div class="prossimo"><span class="stato">In arrivo</span><b>Prenota il primo incontro</b><p>Giorno e ora tra quelli liberi, in studio o in video, con promemoria il giorno prima.</p></div>
-          <div class="prossimo"><span class="stato">In arrivo</span><b>Area clienti</b><p>Documenti e stato della pratica in un servizio protetto collegato al sito.</p></div>
-          <div class="prossimo"><span class="stato gia">Già qui</span><b>Le email in ordine</b><p>Le richieste arrivano con materia, scadenza e urgenza già scritte.</p></div>
-          <div class="prossimo"><span class="stato">In arrivo</span><b>Altri calcoli</b><p>Termini per l'appello, interessi di legge, scadenze dei permessi di soggiorno.</p></div>
-          <div class="prossimo"><span class="stato">In arrivo</span><b>Moduli prima dell'incontro</b><p>Uno per pratica: i dati arrivano prima, l'incontro dura meno.</p></div>
-          <div class="prossimo"><span class="stato">In arrivo</span><b>Domande frequenti</b><p>«Cos'è un avviso di garanzia?», «Posso ritirare una querela?»: risposte brevi, scritte dall'avvocato.</p></div>
-        </div>
-      </div>
+      <!-- 10/11, Franco: la parte «Il sito può crescere» (In arrivo…) tolta dalla home; le idee sono scritte in progetti/avvocato/da-dire-a-lei.md -->
     </div>
   </section>
 
@@ -900,7 +913,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         </div>
       </div>
       <div class="dove-riga">
-        <figure class="tendina dove-foto"><div class="tendina-dentro"><img src="immagini/studio.jpg" alt="All'ingresso di un palazzo, un cliente consegna le chiavi all'avvocato" loading="lazy" onerror="this.remove()"></div><i class="tendina-filo" aria-hidden="true"></i></figure>
+        <!-- 10/11, Franco: tolta la foto con l avvocata fatta con l IA (studio.jpg) -->
         <div class="orari">
           <h3>Quando trovarmi</h3>
           <p>Se non puoi venire, il primo incontro si fa in video.</p>
@@ -1292,6 +1305,108 @@ $$('.lastra-testo, .chi-testo, .orari, .dove-pannello').forEach(el => { el.class
 /* la firma sta in fondo alla pagina: scatta appena se ne vede un filo */
 const vediFirma = vedi ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vista'); vediFirma.unobserve(e.target); } }), { threshold: 0 }) : null;
 $$('.firma-giro').forEach(el => vediFirma ? vediFirma.observe(el) : el.classList.add('vista'));
+
+/* ---------- il cerchio dei tre passaggi: lamelle del logo e avanzata nello studio (Franco, 10/11) ---------- */
+/* Ogni cerchio parte quando arriva sullo schermo: il logo si apre a lamelle (spicchi rigidi che ruotano attorno a un perno sul bordo),
+   un tempo di avanzata (Ascoltare: fino a metà corridoio; Spiegare: alla porta dello studio; Difendere: dentro la stanza, lo sguardo gira
+   verso sinistra e il quadro esce dal cerchio), poi le lamelle si richiudono nel logo. Un tocco lo fa ripartire. */
+(() => {
+  const cerchi = $$('.cerchio-passo'); if (!cerchi.length) return;
+  const carica = src => { const im = new Image(); im.src = src; return im; };
+  const corr = carica('immagini/passo-corridoio.jpg'), stanza = carica('immagini/passo-stanza.jpg'), logo = carica('immagini/logo-cerchio.jpg');
+  const pronta = im => new Promise(r => { if (im.complete) r(); else { im.onload = r; im.onerror = r; } }); // onload, non decode(): decode può restare appeso
+  const dolce = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const tra = (a, b, k) => a + (b - a) * k;
+  const N = 7, LARGO = (360 / N) * 1.8 * Math.PI / 180, GIRO = 96 * Math.PI / 180, ROT0 = -Math.PI / 2;
+  // il corridoio (686x782): zoom e centro dell'inquadratura all'inizio, a metà corridoio, alla porta dello studio
+  const C = [{ z: 1, x: 343, y: 391 }, { z: 1.6, x: 350, y: 402 }, { z: 2.75, x: 358, y: 420 }, { z: 3.3, x: 360, y: 424 }];
+  const SCALETTA = [['attesa', .35], ['apre', 1.4], ['tempo', 3.6], ['tieni', .6], ['chiude', 1.4]];
+  const DURATA = SCALETTA.reduce((a, [, d]) => a + d, 0);
+
+  function corridoio(x, W, a, b, k) {
+    const z = tra(a.z, b.z, k), cx = tra(a.x, b.x, k), cy = tra(a.y, b.y, k), lato = 686 / z;
+    const sx = Math.max(0, Math.min(686 - lato, cx - lato / 2)), sy = Math.max(0, Math.min(782 - lato, cy - lato / 2));
+    x.drawImage(corr, sx, sy, lato, lato, 0, 0, W, W);
+  }
+  function vista(x, W, passo, k) { // k = avanzamento del tempo, 0..1
+    if (passo < 2) return corridoio(x, W, C[passo], C[passo + 1], dolce(k));
+    // Difendere: si passa la porta (il corridoio sfuma nella stanza), poi lo sguardo gira verso sinistra
+    const e = dolce(k), f = Math.min(1, k / .3);
+    if (f < 1) corridoio(x, W, C[2], C[3], dolce(f));
+    const lato = tra(900, 700, e), sx = tra(1024 - 900, 30, e), cy = tra(800, 830, e);
+    x.globalAlpha = dolce(f); x.drawImage(stanza, sx, cy - lato / 2, lato, lato, 0, 0, W, W); x.globalAlpha = 1;
+  }
+  let fondo = null; // il logo su fondo bianco, preparato una volta per misura; disegnato appena più grande, così il suo cerchio stampato esce dal bordo e resta una linea sola
+  function fondoLogo(W) {
+    if (fondo && fondo.width === W) return fondo;
+    fondo = document.createElement('canvas'); fondo.width = fondo.height = W; const g = fondo.getContext('2d');
+    g.fillStyle = '#fff'; g.fillRect(0, 0, W, W); if (logo.naturalWidth) g.drawImage(logo, -W * .03, -W * .03, W * 1.06, W * 1.06);
+    return fondo;
+  }
+  function lamella(x, W, i, ap) {
+    const R = W / 2, ai = ROT0 + i * 2 * Math.PI / N, px = R + R * Math.cos(ai), py = R + R * Math.sin(ai);
+    x.save(); x.translate(px, py); x.rotate(-ap * GIRO); x.translate(-px, -py);
+    x.beginPath(); x.moveTo(R, R); x.lineTo(px, py); x.arc(R, R, R * 1.04, ai, ai + LARGO); x.closePath();
+    x.save(); x.clip(); x.drawImage(fondoLogo(W), 0, 0); // un solo disegno per lamella: con fondo bianco e logo separati, ai bordi trapelava un filo bianco
+    if (ap > 0) { x.fillStyle = 'rgba(120, 90, 60, ' + (0.05 + 0.04 * (i % 2)) + ')'; x.fillRect(-W, -W, 3 * W, 3 * W); }
+    x.restore();
+    if (ap > 0) { const al = Math.min(1, ap * 12);
+      x.shadowColor = 'rgba(40, 28, 18, ' + (.35 * al) + ')'; x.shadowBlur = 10 * W / 880;
+      x.strokeStyle = 'rgba(154, 115, 80, ' + (.9 * al) + ')'; x.lineWidth = 1.4 * W / 880;
+      x.beginPath(); x.moveTo(R, R); x.lineTo(px, py); x.stroke(); x.shadowColor = 'transparent'; }
+    x.restore();
+  }
+  function disegna(c, ap, k) {
+    const x = c.x, W = c.tela.width, R = W / 2;
+    x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, W, W);
+    x.save(); x.beginPath(); x.arc(R, R, R - 1, 0, 2 * Math.PI); x.clip();
+    if (ap > 0) { vista(x, W, c.passo, k);
+      const v = x.createRadialGradient(R, R, R * .55, R, R, R); v.addColorStop(0, 'rgba(31,26,22,0)'); v.addColorStop(1, 'rgba(31,26,22,.22)'); x.fillStyle = v; x.fillRect(0, 0, W, W); }
+    if (ap < 1) {
+      for (let i = 1; i < N; i++) lamella(x, W, i, ap);
+      lamella(x, W, 0, ap);
+      if (ap > 0) { // la lamella 1 sta sopra la 0 dove si toccano: chiude il giro delle sovrapposizioni
+        const px = R + R * Math.cos(ROT0), py = R + R * Math.sin(ROT0);
+        x.save(); x.translate(px, py); x.rotate(-ap * GIRO); x.translate(-px, -py);
+        x.beginPath(); x.moveTo(R, R); x.lineTo(px, py); x.arc(R, R, R * 1.04, ROT0, ROT0 + LARGO); x.closePath(); x.restore();
+        x.save(); x.clip(); lamella(x, W, 1, ap); x.restore(); }
+    }
+    x.restore();
+    x.strokeStyle = 'rgba(93, 85, 79, .85)'; x.lineWidth = Math.max(1, W / 700);
+    x.beginPath(); x.arc(R, R, R - x.lineWidth, 0, 2 * Math.PI); x.stroke();
+  }
+  function statoAl(t) { // dove siamo nella scaletta: apertura delle lamelle e avanzamento del tempo
+    let a = 0;
+    for (const [nome, d] of SCALETTA) {
+      if (t < a + d) { const k = (t - a) / d;
+        if (nome === 'attesa') return [0, 0]; if (nome === 'apre') return [dolce(k), 0]; if (nome === 'tempo') return [1, k];
+        if (nome === 'tieni') return [1, 1]; return [1 - dolce(k), 1]; }
+      a += d;
+    }
+    return [0, 1];
+  }
+  const tutti = cerchi.map(f => { const tela = $('canvas', f); return { f, tela, x: tela.getContext('2d'), passo: +f.dataset.passo, inizio: -1 }; });
+  function misura() { const d = Math.min(2, devicePixelRatio || 1); tutti.forEach(c => { const w = Math.round(c.tela.getBoundingClientRect().width * d); if (w && c.tela.width !== w) { c.tela.width = w; c.tela.height = w; } fermo(c); }); }
+  const fermo = c => MUOVI ? disegna(c, 0, 0) : disegna(c, 1, 1); // con «riduci movimento» si vede l'arrivo, fermo
+  let gira = false;
+  function giro(ora) {
+    let ancora = false;
+    tutti.forEach(c => { if (c.inizio < 0) return; const t = (ora - c.inizio) / 1000;
+      if (t >= DURATA) { c.inizio = -1; disegna(c, 0, 1); return; }
+      const [ap, k] = statoAl(t); disegna(c, ap, k); ancora = true; });
+    gira = ancora; if (ancora) requestAnimationFrame(giro);
+  }
+  function parti(c) { if (!MUOVI) return; c.inizio = performance.now(); if (!gira) { gira = true; requestAnimationFrame(giro); } }
+  Promise.all([corr, stanza, logo].map(pronta)).then(() => {
+    misura(); addEventListener('resize', misura);
+    tutti.forEach(c => c.tela.addEventListener('click', () => parti(c)));
+    if (!('IntersectionObserver' in window)) return;
+    const visti = new IntersectionObserver(es => es.forEach(e => { const c = tutti.find(q => q.f === e.target);
+      if (e.intersectionRatio >= .6 && c.inizio < 0 && !c.giaVisto) { c.giaVisto = true; parti(c); }
+      if (!e.isIntersecting) c.giaVisto = false; }), { threshold: [0, .6] });
+    tutti.forEach(c => visti.observe(c.f));
+  });
+})();
 
 /* ---------- pulsanti che seguono un poco il mouse ---------- */
 if (MUOVI && matchMedia('(pointer: fine)').matches) $$('.magnetico').forEach(b => {
