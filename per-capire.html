@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow"><!-- anteprima per lei: Google non la mostra finché il sito non è pronto (10/11) -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Per capire · Studio Legale Angelelli</title>
+<meta name="description" content="Video e articoli brevi dell'Avv. Alessandra Angelelli, divisi per materia: famiglia e minori, penale, risarcimenti, immigrazione.">
+<link rel="icon" href="immagini/monogramma.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600;700&display=swap">
+<script>/* 10/11, Franco (strada A): «le pagine non partono dall'alto ma si piazzano subito in basso». Ogni pagina parte dall'alto (anche ricaricandola);
+   arrivando su una sezione (pagina.html#sezione) tolgo subito la sezione dall'indirizzo, così il browser non salta: ci si arriva scivolando, dallo script in fondo */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (location.hash.length > 1) { window.__arrivo = decodeURIComponent(location.hash.slice(1)); history.replaceState(null, '', location.pathname + location.search); }</script>
+<style>
+/* Pagina «Per capire» (10/11/2026). Franco ha scelto la versione 2 tra tre: un indice con le sue materie, si sceglie la materia e restano i pezzi su quella.
+   Due pezzi veri: il suo Reel sul Tribunale dei minori e l'intervista della Provincia (senza nome né foto del cliente: codice deontologico forense, art. 35 c. 8).
+   Gli articoli li scrive lei: niente pezzi inventati. Testata, piede e stili di base presi da chi-sono.html. */
+:root {
+  --avorio: #f6f1e9; --avorio-2: #efe6da; --gesso: #fbf8f3; --nocciola: #e3d2ba; --sabbia: #d8c4a6;
+  --bronzo: #8f6b47; --bronzo-linea: #b8946b; --bronzo-chiaro: #d2b088;
+  --inchiostro: #1f1a16; --tenue: #685e54; --linea: rgb(70 50 30 / .15); --linea-forte: rgb(70 50 30 / .32);
+  --noce: #2a2420; --su-noce: #f2ebe1; --su-noce-tenue: #b9ad9d; --linea-noce: rgb(242 235 225 / .15);
+  --salvia: #5f8159;
+  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif; --sans: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --gutter: clamp(16px, 4.2vw, 64px); --largo: 1360px; --alto: 64px;
+  --bordo-sx: max(var(--gutter), calc((100vw - var(--largo)) / 2));
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+@view-transition { navigation: auto; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--avorio); color: var(--inchiostro); font: 400 16px/1.6 var(--sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .55; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outline-offset: 3px; }
+.contenitore { width: min(100% - 2 * var(--gutter), var(--largo)); margin-inline: auto; }
+.occhio { font: 600 .68rem/1.4 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: var(--tenue); }
+.occhio::before { content: ""; display: inline-block; width: 22px; height: 1px; background: var(--bronzo-linea); vertical-align: middle; margin-right: 12px; }
+.titolo { font: 300 clamp(2.5rem, 4.8vw, 4.6rem)/1.02 var(--serif); letter-spacing: -.01em; }
+.titolo em { font-style: italic; color: var(--bronzo); }
+.bottone { display: inline-flex; align-items: center; gap: 14px; background: var(--inchiostro); color: var(--gesso); text-decoration: none; font: 600 .95rem var(--sans); padding: 17px 28px; border: 0; border-radius: 999px; cursor: pointer; transition: background .3s, transform .35s cubic-bezier(.2,.7,.2,1); }
+.bottone:hover { background: #3a3029; }
+.pillola { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; justify-self: start; border: 1px solid var(--bronzo-linea); color: var(--bronzo); text-decoration: none; font: 500 .93rem var(--sans); padding: 10px 22px; border-radius: 999px; transition: background .3s, color .3s; }
+.pillola:hover { background: var(--bronzo); color: var(--gesso); }
+.sez { padding-block: clamp(80px, 12vh, 140px); }
+
+/* ---------- testata (uguale alla home; sotto, l'indice di questa pagina) ---------- */
+.testata { position: fixed; top: 0; left: 0; right: 0; z-index: 80; transition: background .45s, box-shadow .45s; }
+.testata-riga { display: flex; align-items: center; gap: 26px; height: 78px; transition: height .45s cubic-bezier(.2,.7,.2,1); }
+.marchio { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--inchiostro); flex: none; }
+.monogramma { width: 44px; height: 44px; flex: none; }
+.marchio-linea { width: 1px; height: 30px; background: var(--bronzo-linea); transition: opacity .3s; }
+.marchio-nome { display: grid; line-height: 1.1; overflow: hidden; max-width: 260px; white-space: nowrap; transition: max-width .5s cubic-bezier(.2,.7,.2,1), opacity .35s; }
+.marchio-nome b { font: 500 1.42rem var(--serif); letter-spacing: .03em; }
+.marchio-nome small { font: 600 .6rem var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--tenue); margin-top: 3px; }
+.menu { margin-left: auto; display: flex; gap: 22px; }
+.menu a { position: relative; text-decoration: none; font: 500 .9rem var(--sans); color: var(--tenue); padding: 6px 0; white-space: nowrap; transition: color .3s; }
+.menu a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1.5px; background: var(--bronzo-linea); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.menu a:hover, .menu a.attiva { color: var(--inchiostro); }
+.menu a.attiva::after { transform: none; }
+.aperto { display: inline-flex; align-items: center; gap: 8px; font: 500 .78rem var(--sans); color: var(--tenue); white-space: nowrap; }
+.aperto i { width: 7px; height: 7px; border-radius: 50%; background: var(--salvia); }
+.aperto.chiuso i { background: var(--sabbia); }
+@media (prefers-reduced-motion: no-preference) { .aperto:not(.chiuso) i { animation: respira 2.4s ease-out infinite; } @keyframes respira { 0% { box-shadow: 0 0 0 0 rgb(95 129 89 / .5); } 100% { box-shadow: 0 0 0 7px rgb(95 129 89 / 0); } } }
+.tel { font: 600 .9rem var(--sans); text-decoration: none; white-space: nowrap; }
+.apri-menu { display: none; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; position: relative; }
+.apri-menu span { position: absolute; left: 11px; right: 11px; height: 1.5px; background: var(--inchiostro); }
+.apri-menu span:first-child { top: 17px; } .apri-menu span:last-child { top: 26px; }
+.testata-sotto { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .45s cubic-bezier(.2,.7,.2,1), opacity .3s; }
+.testata-sotto > div { overflow: hidden; }
+.testata-sotto .contenitore { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--linea); }
+.sottomenu { display: flex; gap: 24px; flex-wrap: wrap; }
+.sottomenu a { position: relative; text-decoration: none; font: 500 .88rem var(--sans); color: var(--tenue); padding: 12px 0; transition: color .3s; }
+.sottomenu a::before { content: ""; position: absolute; left: 0; top: 0; width: 18px; height: 1.5px; background: var(--bronzo-linea); transform: scaleX(0); transform-origin: left; transition: transform .4s; }
+.sottomenu a.attiva { color: var(--inchiostro); }
+.sottomenu a.attiva::before { transform: none; }
+.dimostra { font: 500 .72rem var(--sans); color: var(--tenue); letter-spacing: .04em; }
+.testata.stretta { background: rgb(246 241 233 / .8); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); box-shadow: 0 1px 0 var(--linea); }
+.testata.stretta .testata-riga { height: var(--alto); }
+.testata.stretta .marchio-nome { max-width: 0; opacity: 0; }
+.testata.stretta .marchio-linea { opacity: 0; }
+.testata.stretta .testata-sotto { grid-template-rows: 0fr; opacity: 0; }
+.velo-menu { position: fixed; inset: 0; z-index: 110; background: rgb(31 26 22 / .22); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .4s, visibility .4s; }
+.pannello-menu { position: fixed; top: 0; right: 0; bottom: 0; z-index: 120; width: min(420px, 100%); background: var(--gesso); transform: translateX(100%); transition: transform .5s cubic-bezier(.65,.05,.35,1); display: flex; flex-direction: column; gap: 28px; padding: 22px var(--gutter) 36px; overflow-y: auto; }
+.pannello-menu nav { display: grid; gap: 4px; }
+.pannello-menu nav a { font: 300 2.2rem/1.25 var(--serif); text-decoration: none; }
+.pannello-menu nav a.attiva { font-style: italic; color: var(--bronzo); }
+.pannello-menu .chiudi-menu { align-self: flex-end; background: none; border: 1px solid var(--linea-forte); border-radius: 999px; padding: 8px 18px; cursor: pointer; font: 500 .9rem var(--sans); }
+.menu-aperto .velo-menu { opacity: 1; visibility: visible; }
+.menu-aperto .pannello-menu { transform: none; }
+
+
+/* ---------- fondo (uguale alla home) ---------- */
+.fondo { background: var(--noce); color: var(--su-noce); padding-top: clamp(80px, 12vh, 130px); overflow: hidden; }
+.fondo-griglia { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1fr); gap: 36px; }
+.fondo h3 { font: 600 .64rem var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--bronzo-chiaro); margin-bottom: 14px; }
+.fondo p, .fondo li, .fondo dd { font-size: .92rem; color: var(--su-noce-tenue); line-height: 1.65; }
+.fondo .nome-f { font: 400 1.7rem var(--serif); color: var(--su-noce); margin-bottom: 8px; }
+.fondo dl { margin: 0; display: grid; gap: 10px; }
+.fondo dt { font-weight: 600; font-size: .86rem; color: var(--su-noce); }
+.fondo dd { margin: 0; }
+.fondo ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.fondo a { color: var(--su-noce); }
+.firma-giro { overflow: hidden; margin-top: clamp(60px, 10vh, 110px); }
+.firma { font: 300 clamp(3rem, 13.2vw, 13rem)/.86 var(--serif); letter-spacing: -.025em; white-space: nowrap; color: var(--su-noce); opacity: .92; padding-bottom: .1em; }
+.firma em { font-style: italic; color: var(--bronzo-chiaro); }
+@media (prefers-reduced-motion: no-preference) { .firma { transform: translateY(70%); transition: transform 1.6s cubic-bezier(.2,.75,.15,1); } .firma-giro.vista .firma { transform: none; } }
+@media (prefers-reduced-motion: no-preference) { .entra-sx { opacity: 0; transform: translateX(-60px); transition: opacity 1.1s cubic-bezier(.2,.7,.2,1) .2s, transform 1.4s cubic-bezier(.2,.7,.2,1) .2s; } .entra-sx.vista { opacity: 1; transform: none; } } /* 9/11, Franco: le scritte accanto alle foto entrano da sinistra verso destra */
+
+/* ---------- la pagina ---------- */
+.pc-testa { padding: calc(130px + 4vh) 0 clamp(36px, 6vh, 64px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px 48px; }
+.pc-testa > div { display: grid; gap: 18px; }
+.pc-testa h1 { font: 300 clamp(3.4rem, 7vw, 6.8rem)/.95 var(--serif); letter-spacing: -.015em; }
+.pc-testa h1 em { font-style: italic; color: var(--bronzo); }
+.pc-testa p:not(.occhio) { color: var(--tenue); font-size: 1.06rem; max-width: 46ch; }
+.materie { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.materie button { border: 1px solid var(--bronzo-linea); background: none; color: var(--bronzo); border-radius: 999px; padding: 9px 18px; font: 500 .9rem var(--sans); cursor: pointer; transition: background .25s, color .25s; }
+.materie button:hover { background: rgb(143 107 71 / .08); }
+.materie button[aria-pressed="true"] { background: var(--bronzo); color: var(--gesso); }
+.lista { border-bottom: 1px solid var(--linea); margin-bottom: clamp(70px, 12vh, 130px); }
+.pezzo { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 14px clamp(18px, 3vw, 40px); align-items: center; padding: 26px 0; border-top: 1px solid var(--linea); }
+.pezzo[hidden] { display: none; }
+.pezzo > img { width: 112px; aspect-ratio: 1; object-fit: cover; border-radius: 6px; }
+.etichetta { font: 600 .66rem/1.3 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--bronzo); }
+.pezzo h2 { font: 300 clamp(1.7rem, 3vw, 2.6rem)/1.1 var(--serif); margin-top: 8px; }
+.pezzo .fonte { color: var(--tenue); font-size: .9rem; margin-top: 8px; }
+.apri { border: 0; background: none; padding: 8px 0; font: 600 .9rem var(--sans); color: var(--bronzo); cursor: pointer; white-space: nowrap; }
+.apri:hover { color: var(--inchiostro); }
+.apri span { display: inline-block; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.apri[aria-expanded="true"] span { transform: rotate(90deg); }
+.dentro { grid-column: 2 / -1; display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); align-items: start; padding: 10px 0 8px; }
+.dentro[hidden] { display: none; }
+.dentro video { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--noce); border-radius: 4px; }
+.dentro p { color: var(--tenue); line-height: 1.75; max-width: 52ch; }
+.dentro blockquote { margin: 0 0 14px; font: italic 300 clamp(1.4rem, 2.2vw, 1.9rem)/1.3 var(--serif); color: var(--inchiostro); }
+.dentro.solo-testo { grid-template-columns: minmax(0, 1fr); }
+.vuoto { padding: 34px 0; border-top: 1px solid var(--linea); color: var(--tenue); font: italic 300 1.5rem/1.4 var(--serif); }
+.vuoto a { color: var(--bronzo); }
+.vuoto[hidden] { display: none; }
+.riga-fine { border-top: 1px solid var(--linea-noce); padding-block: 20px 28px; display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: .8rem; color: var(--su-noce-tenue); }
+.tocco { display: none; }
+
+@media (max-width: 1400px) { .tel { display: none; } }
+@media (max-width: 1220px) { .menu, .tel { display: none; } .aperto { margin-left: auto; } .apri-menu { display: block; } }
+@media (max-width: 980px) {
+  :root { --alto: 60px; }
+  .apertura-foto::after, .ch-apertura-foto::after { display: none; }
+  .ch-apertura { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .ch-apertura-testo { padding: 150px var(--gutter) 48px; }
+  .ch-apertura-foto { height: min(70vw, 520px); margin-left: var(--gutter); }
+  .piacere, .ch-due, .ch-studio, .impegno { grid-template-columns: minmax(0, 1fr); }
+  .piacere-foto { max-width: 400px; }
+  .storia-testi, .storia-foto { grid-template-columns: minmax(0, 1fr); }
+  .storia-foto { grid-auto-flow: column; grid-auto-columns: min(72vw, 360px); grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: calc(-1 * var(--gutter)); padding-right: var(--gutter); }
+  .storia-foto .tendina { scroll-snap-align: start; }
+  .foto-grande { aspect-ratio: 4 / 3; }
+  .ch-studio .tendina { aspect-ratio: 4 / 3; margin-right: var(--gutter); }
+  .ch-studio-testo { padding-inline: var(--gutter); }
+  .impegno p { border-left: 0; border-top: 1px solid var(--linea-noce); }
+  .fondo-griglia { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
+  .testata-riga { height: 66px; gap: 14px; }
+  .monogramma { width: 38px; height: 38px; }
+  .marchio-nome b { font-size: 1.22rem; }
+  .aperto, .dimostra { display: none; }
+  .apri-menu { margin-left: auto; }
+  .sottomenu { gap: 16px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .sottomenu a { white-space: nowrap; }
+  .ch-apertura-testo { padding-top: 140px; }
+  .ch-apertura h1 { font-size: clamp(3.2rem, 16vw, 4.4rem); }
+  .come-griglia, .fondo-griglia { grid-template-columns: minmax(0, 1fr); }
+  .tocco { display: grid; grid-template-columns: 1fr 1fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; padding-bottom: env(safe-area-inset-bottom, 0px); background: rgb(251 248 243 / .94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-top: 1px solid var(--linea-forte); }
+  .tocco a { padding: 17px 10px; text-align: center; font-weight: 600; text-decoration: none; background: var(--gesso); }
+  .tocco a + a { background: var(--inchiostro); color: var(--gesso); }
+}
+
+@media (max-width: 720px) {
+  .pezzo { grid-template-columns: 72px minmax(0, 1fr); }
+  .pezzo > img { width: 72px; }
+  .apri { grid-column: 2; justify-self: start; }
+  .dentro { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr); }
+  .pc-testa { padding-top: 120px; }
+}
+</style>
+</head>
+<body>
+
+<header class="testata" id="testata">
+  <div class="contenitore testata-riga">
+    <a class="marchio" href="index.html" aria-label="Avv. Alessandra Angelelli, torna alla home">
+      <svg class="monogramma" viewBox="-520 -520 1040 1040" aria-hidden="true"><circle r="497" fill="none" stroke="#5d554f" stroke-width="1.2" vector-effect="non-scaling-stroke"/><g fill="#b2a294" transform="translate(-762.5 -487)"><polygon points="604,226 643,226 853,748 816,748 624,262 437,748 400,748"/><polygon points="476.2,553 774.6,553 785.8,581 465.3,581"/><polygon points="676,226 712,226 905,712 1089,226 1124,226 926,748 885,748"/><polygon points="743.3,393 1060,393 1049.3,421 754.5,421"/></g></svg>
+      <i class="marchio-linea" aria-hidden="true"></i>
+      <span class="marchio-nome"><b>Alessandra Angelelli</b><small>Avvocato · Milano</small></span>
+    </a>
+    <nav class="menu" aria-label="Pagine">
+      <a href="chi-sono.html">Chi sono</a><a href="index.html#metodo">Il metodo</a><a href="index.html#materie">Materie</a><a href="index.html#scadenze">Scadenze</a><a href="per-capire.html" class="attiva" aria-current="page">Per capire</a><a href="index.html#scrivi">Contatti</a>
+    </nav>
+    <span class="aperto" id="aperto"><i aria-hidden="true"></i><span>Orari dello studio</span></span>
+    <a class="tel" href="tel:+390200000000">02 0000 0000</a>
+    <button type="button" class="apri-menu" aria-label="Apri il menu" aria-expanded="false" aria-controls="pannello-menu"><span></span><span></span></button>
+  </div>
+  </header>
+<div class="velo-menu" aria-hidden="true"></div>
+<aside class="pannello-menu" id="pannello-menu" aria-label="Menu" inert>
+  <button type="button" class="chiudi-menu">Chiudi</button>
+  <nav aria-label="Pagine"><a href="chi-sono.html">Chi sono</a><a href="index.html#metodo">Il metodo</a><a href="index.html#materie">Materie</a><a href="index.html#scadenze">Scadenze</a><a href="per-capire.html" class="attiva" aria-current="page">Per capire</a><a href="index.html#scrivi">Contatti</a></nav>
+  <a class="bottone" href="tel:+390200000000">Chiama 02 0000 0000</a>
+</aside>
+
+<main class="contenitore">
+  <section class="pc-testa" aria-labelledby="t-capire">
+    <div><p class="occhio">Per capire</p><h1 id="t-capire">Per <em>capire.</em></h1></div>
+    <p>Video e articoli brevi, divisi per materia. Si parte dalla domanda, con parole semplici.</p>
+  </section>
+
+  <div class="materie" role="group" aria-label="Scegli una materia">
+    <button type="button" aria-pressed="true" data-m="tutte">Tutte</button><button type="button" aria-pressed="false" data-m="famiglia">Famiglia e minori</button><button type="button" aria-pressed="false" data-m="penale">Penale</button><button type="button" aria-pressed="false" data-m="risarcimenti">Risarcimenti</button><button type="button" aria-pressed="false" data-m="immigrazione">Immigrazione</button>
+  </div>
+
+  <div class="lista">
+    <article class="pezzo" data-m="famiglia">
+      <img src="immagini/chi-video-copertina.jpg" alt="" loading="lazy">
+      <div><p class="etichetta">Video · Famiglia e minori · 2 minuti</p><h2>Il meccanismo del Tribunale dei minori</h2></div>
+      <button type="button" class="apri" aria-expanded="false" aria-controls="p1">Guarda <span aria-hidden="true">→</span></button>
+      <div class="dentro" id="p1" hidden>
+        <video src="immagini/chi-video.mp4" poster="immagini/chi-video-copertina.jpg" controls playsinline preload="none" aria-label="Video: l'Avv. Alessandra Angelelli spiega come funziona il Tribunale dei minori"></video>
+        <p>In due minuti l'Avv. Angelelli spiega come funziona il Tribunale dei minori.</p>
+      </div>
+    </article>
+    <article class="pezzo" data-m="penale">
+      <img src="immagini/per-capire-provincia.jpg" alt="" loading="lazy">
+      <div><p class="etichetta">Rassegna stampa · Penale</p><h2>«Non voleva assolutamente la perizia… Ecco come l'ho convinto»</h2><p class="fonte">La Provincia, 15 luglio 2026</p></div>
+      <button type="button" class="apri" aria-expanded="false" aria-controls="p2">Leggi <span aria-hidden="true">→</span></button>
+      <div class="dentro solo-testo" id="p2" hidden>
+        <div><blockquote>«Non voleva assolutamente la perizia: crede che la diagnosi sulla sua psiche sia una colpa. Ecco come l'ho convinto.»</blockquote>
+        <p>Intervista all'Avv. Angelelli sulla difesa di un uomo davanti alla Corte d'Assise, e su come si accompagna una persona ad accettare una perizia psichiatrica. L'articolo completo è sull'edizione della Provincia del 15 luglio 2026.</p></div>
+      </div>
+    </article>
+    <p class="vuoto" hidden>Su questa materia sto preparando i primi approfondimenti. Se hai una domanda, <a href="index.html#scrivi">scrivimi</a>.</p>
+  </div>
+</main>
+
+<footer class="fondo">
+  <div class="contenitore fondo-griglia">
+    <div>
+      <p class="nome-f">Studio Legale Angelelli</p>
+      <p>Avv. Alessandra Angelelli<br>Via Enrico Besana 6, 20122 Milano</p>
+      <p style="margin-top:12px">Telefono 02 0000 0000<br>Email e PEC da completare</p>
+    </div>
+    <div>
+      <h3>Dati dello studio</h3>
+      <dl>
+        <dt>Avvocato</dt><dd>Avv. Alessandra Angelelli, iscritta all'Ordine degli Avvocati di Milano n. 00000 (da completare). Titolo di avvocato conseguito in Italia.</dd>
+        <dt>Dati fiscali</dt><dd>Avv. Alessandra Angelelli · P.IVA da completare</dd>
+        <dt>Assicurazione professionale</dt><dd>Polizza di responsabilità civile: dati da completare</dd>
+        <dt>Regole professionali</dt><dd>Rispetto il <a href="https://www.consiglionazionaleforense.it/codice-deontologico-forense" target="_blank" rel="noopener">Codice deontologico forense</a>, consultabile sul sito del Consiglio nazionale forense.</dd>
+      </dl>
+    </div>
+    <div>
+      <h3>Link utili</h3>
+      <ul>
+        <li><a href="https://www.consiglionazionaleforense.it" target="_blank" rel="noopener">Consiglio nazionale forense</a></li>
+        <li><a href="https://www.giustizia.it" target="_blank" rel="noopener">Ministero della Giustizia</a></li>
+        <li><a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante privacy</a></li>
+        <li><a href="https://www.1522.eu" target="_blank" rel="noopener">1522, numero antiviolenza</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="contenitore firma-giro"><p class="firma" aria-hidden="true">Alessandra <em>Angelelli</em></p></div>
+  <div class="contenitore riga-fine"><span>Privacy</span><span>Il sito non usa cookie di profilazione, per questo non c'è il banner</span><span>Accessibilità</span></div>
+</footer>
+
+<nav class="tocco" aria-label="Contatto rapido"><a href="tel:+390200000000">Chiama</a><a href="index.html#scrivi">Scrivimi</a></nav>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const MUOVI = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- orari dello studio (come nelle altre pagine) ---------- */
+function aperto() {
+  const d = new Date(), g = d.getDay(), m = d.getHours() * 60 + d.getMinutes(), feriale = g >= 1 && g <= 5;
+  const fasce = [[540, 780], [870, 1110]], f = feriale && fasce.find(([a, b]) => m >= a && m < b), hh = x => Math.floor(x / 60) + ':' + String(x % 60).padStart(2, '0');
+  let testo;
+  if (f) testo = 'Aperto adesso · fino alle ' + hh(f[1]);
+  else {
+    let dopo;
+    if (feriale && m < 540) dopo = 'alle 9:00'; else if (feriale && m >= 780 && m < 870) dopo = 'alle 14:30';
+    else { const nomi = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato']; let k = (g + 1) % 7; while (k === 0 || k === 6) k = (k + 1) % 7; dopo = (k === (g + 1) % 7 ? 'domani' : nomi[k]) + ' alle 9:00'; }
+    testo = 'Chiuso · riapre ' + dopo;
+  }
+  const el = $('#aperto'); el.classList.toggle('chiuso', !f); $('span', el).textContent = testo;
+}
+aperto(); setInterval(aperto, 60000);
+
+
+/* ---------- testata che si stringe ---------- */
+const testata = $('#testata');
+let inCoda = false;
+addEventListener('scroll', () => { if (inCoda) return; inCoda = true; requestAnimationFrame(() => { inCoda = false; testata.classList.toggle('stretta', scrollY > 40); }); }, { passive: true });
+
+/* ---------- le materie filtrano l'elenco; se una materia non ha ancora pezzi, una riga lo dice ---------- */
+$$('.materie button').forEach(b => b.addEventListener('click', () => {
+  $$('.materie button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  let visti = 0;
+  $$('.pezzo').forEach(p => { const si = b.dataset.m === 'tutte' || p.dataset.m === b.dataset.m; p.hidden = !si; if (si) visti++; });
+  $('.vuoto').hidden = visti > 0;
+}));
+/* ---------- «Guarda» e «Leggi» aprono il pezzo sotto la sua riga ---------- */
+$$('.apri').forEach(b => b.addEventListener('click', () => {
+  const d = document.getElementById(b.getAttribute('aria-controls')), apri = d.hidden;
+  d.hidden = !apri; b.setAttribute('aria-expanded', apri);
+  const v = $('video', d); if (v) { if (apri) v.play().catch(() => {}); else v.pause(); }
+}));
+
+/* ---------- firma nel piede ---------- */
+const giro = $('.firma-giro');
+if (giro) { if (!MUOVI || !('IntersectionObserver' in window)) giro.classList.add('vista');
+  else { const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { giro.classList.add('vista'); io.disconnect(); } })); io.observe(giro); } }
+
+/* ---------- menu del telefono ---------- */
+function menu(apri) { document.body.classList.toggle('menu-aperto', apri); $('.apri-menu').setAttribute('aria-expanded', apri); $('#pannello-menu').inert = !apri; }
+$('.apri-menu').addEventListener('click', () => menu(!document.body.classList.contains('menu-aperto')));
+$('.velo-menu').addEventListener('click', () => menu(false));
+$('.chiudi-menu').addEventListener('click', () => menu(false));
+$$('#pannello-menu a').forEach(a => a.addEventListener('click', () => menu(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape') menu(false); });
+</script>
+</body>
+</html>
