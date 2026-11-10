@@ -316,6 +316,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
   .menu-tel a.attiva { color: var(--inchiostro); }
   .menu-tel a.attiva::after { content: ""; position: absolute; left: 0; right: 0; bottom: 7px; height: 1.5px; background: var(--bronzo-linea); }
 }
+
+/* 10/11, Franco: al posto delle dune la GIF dei soldati sotto la pioggia (la clemenza «cade come la pioggia gentile»), nei toni noce, bronzo e avorio:
+   avanza mentre si scorre e si ferma quando il soldato a destra ha la testa del tutto china (fotogramma 48 su 112: dopo la rialza) */
+.tendina.passaggio .tendina-dentro > img.pioggia { object-position: 50% 50%; }
+@media (max-width: 720px) {
+  /* sul telefono la testa del soldato sta in alto: la frase scende in basso, sull acqua, con il velo che sale dal fondo */
+  .tendina.passaggio .tendina-dentro > img.pioggia { object-position: 72% 50%; }
+  #frase .velo-frase { background: linear-gradient(0deg, rgb(246 241 233 / .93) 0%, rgb(246 241 233 / .8) 32%, rgb(246 241 233 / 0) 60%); }
+  #frase .passaggio-frase { top: auto; bottom: 26px; }
+}
 </style>
 </head>
 <body>
@@ -444,7 +454,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
   </section>
 
   <!-- costruzione di passaggio (9/11) -->
-  <figure class="tendina passaggio" id="frase"><div class="tendina-dentro"><img src="immagini/passaggio-chi.jpg" style="object-position: 70% 72%" alt="Dune di gesso all'aperto, con un ponte di noce in diagonale che entra in una galleria illuminata e una freccia incisa nel terreno" loading="lazy" onerror="this.remove()"><i class="velo-frase" aria-hidden="true"></i></div><i class="tendina-filo" aria-hidden="true"></i><blockquote class="passaggio-frase"><p>La clemenza non si impone: cade come la pioggia gentile dal cielo.</p><cite>William Shakespeare, Il mercante di Venezia</cite></blockquote></figure>
+  <figure class="tendina passaggio" id="frase"><div class="tendina-dentro"><img class="pioggia" src="immagini/pioggia/p00.jpg" width="960" height="410" alt="Sotto la pioggia, un soldato in ginocchio alza le mani; un altro, chino, gli tende la mano" loading="lazy"><i class="velo-frase" aria-hidden="true"></i></div><i class="tendina-filo" aria-hidden="true"></i><blockquote class="passaggio-frase"><p>La clemenza non si impone: cade come la pioggia gentile dal cielo.</p><cite>William Shakespeare, Il mercante di Venezia</cite></blockquote></figure>
 
   <!-- 9. il saluto -->
   <section class="sez grazie" aria-labelledby="t-grazie">
@@ -605,6 +615,25 @@ $$('.passaggio-frase p').forEach(el => { const t = el.textContent.trim(); el.tex
     for (const ch of w) { const l = document.createElement('span'); l.className = 'l'; l.textContent = ch; l.style.setProperty('--i', i++); p.appendChild(l); }
     el.appendChild(p); if (k < a.length - 1) el.appendChild(document.createTextNode(' ')); }); });
 osserva('.passaggio-frase', { rootMargin: '0px 0px -12% 0px', threshold: .3 });
+
+/* ---------- la pioggia di Chi sono: la GIF avanza con lo scorrere (Franco, 10/11) ---------- */
+(() => {
+  const img = $('img.pioggia'); if (!img) return;
+  const N = 50, quadro = i => 'immagini/pioggia/p' + String(i).padStart(2, '0') + '.jpg';
+  if (!MUOVI) { img.src = quadro(N - 1); return; } // con «riduci movimento» resta fermo sull'ultimo fotogramma
+  let pronti = false, ultimo = 0;
+  const carica = () => { if (pronti) return; pronti = true; for (let i = 1; i < N; i++) { const im = new Image(); im.src = quadro(i); } };
+  const fig = img.closest('figure');
+  function scorri() {
+    const r = fig.getBoundingClientRect(), vh = innerHeight;
+    if (!pronti && r.top < vh * 2.5) carica();
+    if (r.bottom < 0 || r.top > vh) return;
+    // dall'ingresso dal basso fino a quando la fascia arriva in alto: 0 → ultimo fotogramma (testa china)
+    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * .85))), i = Math.round(p * (N - 1));
+    if (i !== ultimo) { ultimo = i; img.src = quadro(i); }
+  }
+  addEventListener('scroll', scorri, { passive: true }); addEventListener('resize', scorri); scorri();
+})();
 $$('.piacere-testo, .ch-due, .storia-testi, .ch-studio-testo').forEach(el => el.classList.add('entra-sx'));
 osserva('.entra-sx', { rootMargin: '0px 0px -12% 0px', threshold: .15 });
 /* 10/11, Franco: il suo Reel al posto della foto della firma. Muto e in giro quando si vede (fermo con «riduci movimento»); «Ascolta» lo fa ripartire dall'inizio con la voce, alla fine torna muto */
