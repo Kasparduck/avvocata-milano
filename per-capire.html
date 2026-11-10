@@ -148,6 +148,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
 .pagina-giornale a { display: block; }
 .pagina-giornale img { display: block; width: 100%; height: auto; background: #fffdf8; border-radius: 3px; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
 .pagina-giornale figcaption { font-size: .82rem; color: var(--tenue); margin-top: 10px; }
+/* il testo dell'articolo ricopiato sotto la pagina, perché la pagina piccola si legge male (Franco, 10/11) */
+.testo-giornale { max-width: 980px; padding-top: 26px; border-top: 1px solid var(--linea); }
+.testo-giornale .nota-giornale { font-size: .88rem; max-width: 70ch; margin-bottom: 22px; }
+.testo-giornale h3 { font: 400 clamp(1.8rem, 3.2vw, 2.7rem)/1.1 var(--serif); color: var(--inchiostro); margin-bottom: 12px; }
+.testo-giornale .sommario-giornale { color: var(--inchiostro); font-size: 1.02rem; max-width: 70ch; margin-bottom: 14px; }
+.testo-giornale .firma-giornale { font: 600 .68rem/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--tenue); margin: 4px 0 20px; max-width: none; }
+.corpo-giornale { max-width: 68ch; } /* una colonna sola: con due, a metà articolo bisognava risalire */
+.corpo-giornale p { color: var(--inchiostro); font-size: 1rem; line-height: 1.75; max-width: none; margin: 0 0 1em; }
 .vuoto { padding: 34px 0; border-top: 1px solid var(--linea); color: var(--tenue); font: italic 300 1.5rem/1.4 var(--serif); }
 .vuoto a { color: var(--bronzo); }
 .vuoto[hidden] { display: none; }
@@ -252,8 +260,25 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--bronzo); outlin
           <a href="immagini/per-capire-provincia-pagina.jpg" target="_blank" rel="noopener"><img src="immagini/per-capire-provincia-pagina.jpg" alt="La pagina della Provincia del 15 luglio 2026 con l'intervista all'Avv. Angelelli" loading="lazy" width="1406" height="1144"></a>
           <figcaption>La Provincia, 15 luglio 2026, pagina 34. Tocca la pagina per ingrandirla.</figcaption>
         </figure>
-        <div><blockquote>«Non voleva assolutamente la perizia: crede che la diagnosi sulla sua psiche sia una colpa. Ecco come l'ho convinto.»</blockquote>
-        <p>Intervista all'Avv. Angelelli sulla difesa di un uomo davanti alla Corte d'Assise, e su come si accompagna una persona ad accettare una perizia psichiatrica. Nome e volto dell'assistito sono oscurati: un avvocato non pubblica i nomi di chi difende.</p></div>
+        <article class="testo-giornale">
+          <p class="nota-giornale">Qui sotto il testo dell'articolo, parola per parola. I nomi dell'assistito e della vittima sono omessi […]: un avvocato non pubblica i nomi di chi difende.</p>
+          <h3>«[…], nella nebbia della sua mente»</h3>
+          <p class="sommario-giornale"><b>Veniano.</b> Parla l'avvocato Alessandra Angelelli, che difende […]: l'uomo è accusato di aver ucciso la compagna</p>
+          <blockquote>«Non voleva assolutamente la perizia: crede che la diagnosi sulla sua psiche sia una colpa. Ecco come l'ho convinto»</blockquote>
+          <p class="firma-giornale">di Paolo Moretti · La Provincia, 15 luglio 2026, pagina 34</p>
+          <div class="corpo-giornale">
+            <p>«Guardando […], vedo una “barca vuota”, spinta dai propri traumi e da una nebbia che non gli permette di vedere chi ha davanti».</p>
+            <p>A volte, per essere avvocati, bisogna anche fare un po' gli psicologi. Lo sa bene la penalista Alessandra Angelelli che difende, in Corte d'Assise, […]: l'uomo accusato di aver strangolato a morte la sua compagna e, quindi, di aver simulato il suo suicidio.</p>
+            <p>Una difesa ardua, anche dal punto di vista umano. Un incarico arrivato meno di un mese prima dell'inizio del processo.</p>
+            <p>«Il 20 aprile era un sabato. Ero a letto, a dormire quando il telefono vibra. È una Pec: […] mi aveva nominata, chiedeva a me di assisterlo nel suo processo per omicidio. […] non era più un fascicolo, ma un uomo che temeva di sparire dentro una definizione». L'avvocato, che vive e lavora a Milano, inforca la sua bicicletta e raggiunge il carcere di San Vittore: «Quando incontro […], lui non cerca conforto, ma controllo. Mi dice di essere innocente, con una convinzione tale da farmi credere che lui ne sia proprio certo. Ed ho percepito anche la sua sofferenza, profonda e nascosta. Il suo non essere presente, scollegato dalla realtà». L'avvocato Angelelli parla di sofferenza, ben sapendo che i piani tra quella provata dai famigliari di […] - la vittima - e quella del suo cliente sono profondamente diversi: «Uno degli aspetti umanamente più difficili di questo processo è proprio quello di essere sempre rispettosi di quel dolore, pur nell'esercizio del diritto della difesa».</p>
+            <p>La chiave di tutto, e la legale lo sa, è lo stato di salute mentale del suo cliente: «“Serve una valutazione” gli spiego. “Serve una perizia”. Ma […] scuote la testa, secco. “Non voglio.” La resistenza è totale, non solo razionale: è il timore che la perizia lo riduca a categoria e che la paranoia da lui negata venga letta come colpa aggiuntiva. Ho capito cosa stava difendendo: non la libertà, ma la propria identità. Così propongo lo psichiatra e la perizia psichiatrica come strumento, non come etichetta».</p>
+            <p>Quando la Procura ha tentato di far valutare […], lui si è chiuso in un silenzio ostinato: «[…] non vuole vedere psichiatri, né farsi curare, e nemmeno la perizia - prosegue Alessandra Angelelli - La sua resistenza non è un capriccio: teme che tutto ciò che lo riguarda venga trasformato in una diagnosi, e la diagnosi in una cura, la cura in una colpa. Non è paura del dolore, ma di perdere il controllo della propria identità, di essere svuotato di sé».</p>
+            <p>C'è una riflessione che all'avvocato torna in mente, quando il suo cliente si perde in infiniti silenzi durante i colloqui in carcere: «A volte, in quel silenzio teso, mi torna in mente una riflessione che avevo letto: “Se una barca colpisce la tua nella nebbia, tu urli con rabbia contro chi la guida. Ma se la nebbia si dirada e vedi che la barca è vuota, la tua rabbia svanisce all'istante. Perché non c'è nessuno da incolpare.” Guardando […], capivo che lui era proprio questo: una “barca vuota”. E non stava urlando contro di me, l'avvocato. Stava urlando contro il proprio tormento».</p>
+            <p>Nel corso del processo la legale di […] ha ovviamente intrapreso una difesa anche di merito, ma l'unica strategia reale è quella della valutazione della mente dell'imputato: «Ho spiegato che avremmo fatto la perizia contemporaneamente al processo. La perizia non ferma l'aula. “Noi andiamo avanti insieme - gli ho detto - decidiamo chi e come sentire come testimone, come impostare le domande. La perizia serve a rendere la difesa più precisa. Non a sostituirla”. Lui è rimasto in silenzio, poi finalmente: “Se il Giudice la vuole disporre… io farò la perizia”».</p>
+            <p>E così si arriva in aula: «Il giudice Cecchetti accoglie la nostra richiesta. Non è una vittoria, ma un respiro. Mentre il giudice legge il provvedimento, sento però […] irrigidirsi. Ma la Corte ha aperto uno spiraglio su quello che la stampa ha definito “un mattone importante per il futuro del dibattimento”: la necessità di indagare la sua personalità di tipo paranoide».</p>
+            <p>Difendere un uomo accusato di un delitto atroce non è mai semplice. Soprattutto in aula, nel contraddittorio, davanti alle vittime. E soprattutto in una vicenda dove gli indizi a carico sono pesantissimi. Ma dopo quella prima udienza per l'avvocato Angelelli si è aperto uno spiraglio: «Ora c'è uno spazio, dove la sua mente, tormentata, ma pur sempre una mente umana, potrà essere guardata per ciò che era, non solo per ciò che l'accusa voleva che fosse». Il termine per il deposito della perizia è fine settembre. Si torna in aula il 28 ottobre.</p>
+          </div>
+        </article>
       </div>
     </article>
     <p class="vuoto" hidden>Su questa materia sto preparando i primi approfondimenti. Se hai una domanda, <a href="index.html#scrivi">scrivimi</a>.</p>
